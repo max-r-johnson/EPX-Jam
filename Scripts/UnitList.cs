@@ -1,35 +1,43 @@
 using Godot;
 using System;
-using System.Security.Cryptography.X509Certificates;
+using System.Collections.Generic;
 
 public partial class Murderer : Unit
 {
-    public override int baseQuantity => 4;
+    public override int baseQuantity { get; set; } = 4;
     public Murderer() : base() 
     {        
         name = "Murderer";
-        attack = 3;
+        stats["attack"] = 3;
+    }
+
+    public Murderer(int quantity, Dictionary<string, int> stats = null) : base(quantity, stats) 
+    {        
+        name = "Murderer";
     }
 
     public override void upgrade()
     {
-        attack += 3;
-        quantity += 4;
+        stats["attack"] += 3;
     }
 }
 
 public partial class Looter : Unit
 {
-    public override int baseQuantity => 20;
+    public override int baseQuantity { get; set; } = 6;
     public Looter() : base() 
     {        
         name = "Looter";
-        attack = 1;
+        stats["attack"] = 1;
+    }
+
+    public Looter(int quantity, Dictionary<string, int> stats = null) : base(quantity, stats) 
+    {        
+        name = "Looter";
     }
 
     public override void upgrade()
     {
-        attack += 1;
-        quantity += 6;
+        stats["attack"] += 1;
     }
 }

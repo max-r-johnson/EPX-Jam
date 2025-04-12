@@ -3,22 +3,37 @@ using System;
 
 public partial class BattleNode : Node
 {
+	public Game game {get {return GameManager.Game;}}
+	public Subjects subjects {get {return game.subjects;}}
+	public Subjects enemySubjects {get {return game.enemySubjects;}}
 	public override void _Ready()
 	{
-		instantiateUnits(GameManager.Game.subjects);
+		game.currentNode = this;
+		subjects.instantiateUnits();
+		enemySubjects.instantiateUnits();
+		GD.Print(subjects.ToString());
+		GD.Print(enemySubjects.ToString());
+		setupButtons();
 	}
 
-	public void instantiateUnits(Subjects subjects)
+	public void setupButtons()
 	{
-		foreach (Unit unit in subjects.units)
-		{
-			foreach (int i in GD.Range(subjects.unitQuantities[unit]))
-			{
-				var unitScene = GD.Load<PackedScene>("res://Scenes/Unit.tscn");
-				var unitInstance = unitScene.Instantiate();
-				unitInstance.Name = unit.name;
-				AddChild(unitInstance);
-			}
-		}
+		Button refresh = GetNode<Button>("Refresh");
+		refresh.Pressed += OnRefresh;
+
+		Button endTurn = GetNode<Button>("End Turn");
+		endTurn.Pressed += OnEndTurn;
+	}
+
+	private void OnRefresh()
+	{
+		subjects.decLives(1);
+		GD.Print(subjects.ToString());
+	}
+
+	private void OnEndTurn()
+	{
+		subjects.incLives(10);
+		GD.Print(subjects.ToString());
 	}
 }
