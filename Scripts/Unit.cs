@@ -16,7 +16,8 @@ public partial class Unit
             { "attack", 1 },
             { "speed", 1 },
 			{ "health", 1 },
-			{ "attack speed", 1 }
+			{ "attack speed", 1 },
+			{ "movement speed", 1},
         };
 	}
 
@@ -29,7 +30,8 @@ public partial class Unit
             { "attack", 1 },
             { "speed", 1 },
 			{ "health", 1 },
-			{ "attack speed", 1 }
+			{ "attack speed", 1 },
+			{ "movement speed", 1 },
         };
     }
 

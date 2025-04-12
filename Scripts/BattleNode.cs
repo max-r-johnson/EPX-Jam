@@ -1,17 +1,29 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public partial class BattleNode : Node
 {
 	public Game game {get {return GameManager.Game;}}
 	public Shop shop {get {return game.shop;}}
-	public Subjects subjects {get; set;}
-	public Subjects enemySubjects {get; set;}
-	public override void _Ready()
+	public Subjects subjects {get {return game.subjects;}}
+	public Subjects enemySubjects {get {return game.enemySubjects;}}
+	public override async void _Ready()
 	{
 		game.currentNode = this;
-		subjects = new Subjects([new Murderer(), new Looter()], false);
-		enemySubjects = new Subjects([new Murderer()], true);
+		game.subjects = new Subjects([new Murderer(), new Looter()], false);
+		game.enemySubjects = new Subjects([new Murderer()], true);
+		List<Task> moveTasks = new();
+		foreach(UnitInstance unitInstance in game.subjects.unitInstances[game.subjects.unitTypes[0]])
+		{
+			moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
+		}
+		foreach(UnitInstance unitInstance in game.enemySubjects.unitInstances[game.enemySubjects.unitTypes[0]])
+		{
+			moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
+		}
+		await Task.WhenAll(moveTasks);
 		GD.Print(subjects.ToString());
 		GD.Print(enemySubjects.ToString());
 		setupButtons();
