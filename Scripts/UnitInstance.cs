@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 public partial class UnitInstance
@@ -24,9 +25,27 @@ public partial class UnitInstance
 
 	public UnitInstance findTarget()
 	{
-		return isEnemy
-			? game.subjects.unitInstances[game.subjects.unitTypes[0]][0]
-			: game.enemySubjects.unitInstances[game.enemySubjects.unitTypes[0]][0];
+		List<UnitInstance> enemies = isEnemy
+			? game.subjects.unitInstances.SelectMany(kvp => kvp.Value).ToList()
+			: game.enemySubjects.unitInstances.SelectMany(kvp => kvp.Value).ToList();
+
+		Vector2 myPos = correspondingNode.Position;
+
+		UnitInstance closest = null;
+		float closestDistance = float.MaxValue;
+
+		foreach (var enemy in enemies)
+		{
+			Vector2 enemyPos = enemy.correspondingNode.Position;
+			float distance = myPos.DistanceTo(enemyPos);
+			if (distance < closestDistance)
+			{
+				closestDistance = distance;
+				closest = enemy;
+			}
+		}
+
+		return closest;
 	}
 
 	public async Task moveToEnemy(UnitInstance enemy)

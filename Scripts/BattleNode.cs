@@ -18,19 +18,24 @@ public partial class BattleNode : Node
 		GD.Print(enemySubjects.ToString());
 		setupButtons();
 		List<Task> moveTasks = new();
-		UnitInstance unitInstance = game.subjects.unitInstances[game.subjects.unitTypes[0]][0];
-		UnitInstance enemyInstance = game.enemySubjects.unitInstances[game.enemySubjects.unitTypes[0]][0];
-		moveTasks.Add(unitInstance.moveToEnemy(enemyInstance));
-		moveTasks.Add(enemyInstance.moveToEnemy(unitInstance));
-		// {
-		// foreach(UnitInstance unitInstance in game.subjects.unitInstances[game.subjects.unitTypes[0]])
-		// {
-		// 	moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
-		// }
-		// foreach(UnitInstance unitInstance in game.enemySubjects.unitInstances[game.enemySubjects.unitTypes[0]])
-		// {
-		// 	moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
-		// }
+		// UnitInstance unitInstance = game.subjects.unitInstances[game.subjects.unitTypes[0]][0];
+		// UnitInstance enemyInstance = game.enemySubjects.unitInstances[game.enemySubjects.unitTypes[0]][0];
+		// moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
+		// moveTasks.Add(enemyInstance.moveToEnemy(enemyInstance.findTarget()));
+		foreach (Unit unitType in game.subjects.unitTypes)
+		{
+			foreach (UnitInstance unitInstance in game.subjects.unitInstances[unitType])
+			{
+				moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
+			}
+		}
+		foreach (Unit unitType in game.enemySubjects.unitTypes)
+		{
+			foreach(UnitInstance unitInstance in game.enemySubjects.unitInstances[unitType])
+			{
+				moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
+			}
+		}
 		await Task.WhenAll(moveTasks);
 	}
 

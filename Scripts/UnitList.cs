@@ -31,6 +31,7 @@ public partial class Looter : Unit
         name = "Looter";
         stats["attack"] = 1;
         stats["health"] = 10;
+        stats["movement speed"] = 3;
     }
 
     public Looter(int quantity, Dictionary<string, int> stats = null) : base(quantity, stats) 
