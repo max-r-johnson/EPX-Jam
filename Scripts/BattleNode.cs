@@ -14,19 +14,24 @@ public partial class BattleNode : Node
 		game.currentNode = this;
 		game.subjects = new Subjects([new Murderer(), new Looter()], false);
 		game.enemySubjects = new Subjects([new Murderer()], true);
-		List<Task> moveTasks = new();
-		foreach(UnitInstance unitInstance in game.subjects.unitInstances[game.subjects.unitTypes[0]])
-		{
-			moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
-		}
-		foreach(UnitInstance unitInstance in game.enemySubjects.unitInstances[game.enemySubjects.unitTypes[0]])
-		{
-			moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
-		}
-		await Task.WhenAll(moveTasks);
 		GD.Print(subjects.ToString());
 		GD.Print(enemySubjects.ToString());
 		setupButtons();
+		List<Task> moveTasks = new();
+		UnitInstance unitInstance = game.subjects.unitInstances[game.subjects.unitTypes[0]][0];
+		UnitInstance enemyInstance = game.enemySubjects.unitInstances[game.enemySubjects.unitTypes[0]][0];
+		moveTasks.Add(unitInstance.moveToEnemy(enemyInstance));
+		moveTasks.Add(enemyInstance.moveToEnemy(unitInstance));
+		// {
+		// foreach(UnitInstance unitInstance in game.subjects.unitInstances[game.subjects.unitTypes[0]])
+		// {
+		// 	moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
+		// }
+		// foreach(UnitInstance unitInstance in game.enemySubjects.unitInstances[game.enemySubjects.unitTypes[0]])
+		// {
+		// 	moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
+		// }
+		await Task.WhenAll(moveTasks);
 	}
 
 	public void setupButtons()

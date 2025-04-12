@@ -144,6 +144,7 @@ public partial class Subjects
 		unitNode.Name = unit.name;
 
 		UnitInstance unitInstance = new UnitInstance(unit, unitNode);
+		unitInstance.isEnemy = isEnemy;
 		int count = totalInstances();
 		int xPos = (isEnemy ? 2000 : 1000) + count / ROW_SIZE * -SPACING;
 		int yPos = count % ROW_SIZE * SPACING + 500;

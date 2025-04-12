@@ -11,6 +11,7 @@ public partial class UnitInstance
 	public int health { get; set; }
 	public int attackSpeed { get; set; }
 	public int attack { get; set; }
+	public bool isEnemy { get; set; }
 
 	public UnitInstance(Unit unitType, Node2D correspondingNode)
 	{
@@ -23,46 +24,52 @@ public partial class UnitInstance
 
 	public UnitInstance findTarget()
 	{
-		return game.enemySubjects.unitInstances[game.enemySubjects.unitTypes[0]][0];
+		return isEnemy
+			? game.subjects.unitInstances[game.subjects.unitTypes[0]][0]
+			: game.enemySubjects.unitInstances[game.enemySubjects.unitTypes[0]][0];
 	}
 
-	public async Task moveToEnemy(UnitInstance unitInstance)
+	public async Task moveToEnemy(UnitInstance enemy)
 	{
-		while (health > 0)
-		{
-			Vector2 enemyPosition = unitInstance.correspondingNode.Position;
+		if (enemy == null || enemy.health <= 0)
+			enemy = findTarget();
 
-			if (correspondingNode.Position == enemyPosition)
+		float speed = unitType.stats["movement speed"] * 50f;
+
+		while (enemy.health > 0)
+		{
+			Vector2 currentPosition = correspondingNode.Position;
+			Vector2 enemyPosition = enemy.correspondingNode.Position;
+
+			float step = speed * (float)correspondingNode.GetProcessDeltaTime();
+			Vector2 nextPosition = currentPosition.MoveToward(enemyPosition, step);
+			correspondingNode.Position = nextPosition;
+
+			if (currentPosition.DistanceTo(enemyPosition) < 1f)
 			{
-				GD.Print("attacking");
+				await attackEnemy(enemy);
 				break;
 			}
 
-			Tween tween = correspondingNode.GetTree().CreateTween();
-			Vector2 currentPosition = correspondingNode.Position;
-			float distance = currentPosition.DistanceTo(enemyPosition);
-			float speed = unitType.stats["movement speed"] * 50;
-			float duration = distance / speed;
-
-			tween.TweenProperty(correspondingNode, "position", enemyPosition, duration)
-				.SetTrans(Tween.TransitionType.Linear)
-				.SetEase(Tween.EaseType.InOut);
-
-			await correspondingNode.ToSignal(tween, "finished");
+			await correspondingNode.ToSignal(correspondingNode.GetTree(), "process_frame");
 		}
 	}
 
-	public void attackEnemy(UnitInstance unitInstance)
+	public async Task attackEnemy(UnitInstance enemy)
 	{
-		unitInstance.health -= attack;
-		if (unitInstance.health <= 0)
+		while (enemy.health > 0)
 		{
-			unitInstance.die();
+			GD.Print("take damage");
+			enemy.health -= attack;
+			float delaySeconds = 1f / attackSpeed;
+			await correspondingNode.ToSignal(correspondingNode.GetTree().CreateTimer(delaySeconds), "timeout");
 		}
+		enemy.die();
 	}
 
 	public void die()
 	{
+		GD.Print("died");
 		// temporarily remove instance - copy instances before/after battle
 	}
 }
