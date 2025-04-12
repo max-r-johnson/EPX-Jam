@@ -3,22 +3,18 @@ using System;
 
 public partial class BattleNode : Node
 {
+	public Game game {get {return GameManager.Game;}}
+	public Subjects subjects {get {return game.subjects;}}
+	public Subjects enemySubjects {get {return game.enemySubjects;}}
 	public override void _Ready()
 	{
-		instantiateUnits(GameManager.Game.subjects);
-	}
-
-	public void instantiateUnits(Subjects subjects)
-	{
-		foreach (Unit unit in subjects.units)
-		{
-			foreach (int i in GD.Range(subjects.unitQuantities[unit]))
-			{
-				var unitScene = GD.Load<PackedScene>("res://Scenes/Unit.tscn");
-				var unitInstance = unitScene.Instantiate();
-				unitInstance.Name = unit.name;
-				AddChild(unitInstance);
-			}
-		}
+		GameManager.Game.currentNode = this;
+		subjects.instantiateUnits();
+		enemySubjects.instantiateUnits();
+		// game.currentNode = this;
+		subjects.incLives(10);
+		GD.Print(subjects.ToString());
+		subjects.decLives(18);
+		GD.Print(subjects.ToString());
 	}
 }
