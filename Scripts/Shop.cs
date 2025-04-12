@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 public partial class Shop
 {
@@ -25,12 +26,13 @@ public partial class Shop
         for (int i = remainder; i > 0; i--)
         {
             currentUpgrades.Add(availableUpgrades.ElementAt(random.Next(availableUpgrades.Count)));
-            if currentUpgrades[-1].Count > dupLimit:
+            if currentUpgrades[-1].Count() > dupLimit:
             {
                 currentUpgrades.RemoveAt(-1);
                 remainder++;
             }
         }
+        //Display currentUpgrades
     }
 
     //Roll shop after each round and at start of game, or after reroll
