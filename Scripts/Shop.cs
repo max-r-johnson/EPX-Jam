@@ -8,14 +8,29 @@ public partial class Shop
     public Hashset<Upgrade> availableUpgrades { get; set; }
     public List<Upgrade> currentUpgrades { get; set; }
     public int rollAmount { get; set; }
+    public int shopSize { get; set; }
+    public int dupLimit { get; set; }
     public Shop()
     {
         rollAmount = 1;
+        shopSize = 6;
+        dupLimit = 2;
     }
 
     public void rollShop()
     {
         GameManager.Game.subjects.decLives(rollAmount);
+        Random random = new Random();
+        int remainder = shopSize;
+        for (int i = remainder; i > 0; i--)
+        {
+            currentUpgrades.Add(availableUpgrades.ElementAt(random.Next(availableUpgrades.Count)));
+            if currentUpgrades[-1].Count > dupLimit:
+            {
+                currentUpgrades.RemoveAt(-1);
+                remainder++;
+            }
+        }
     }
 
     //Roll shop after each round and at start of game, or after reroll
