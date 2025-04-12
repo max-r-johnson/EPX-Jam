@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://co3d2if3tkhjm"]
+
+[ext_resource type="Script" uid="uid://b6wklvr71xi3q" path="res://Scripts/BattleNode.cs" id="1_qk68r"]
+[ext_resource type="Texture2D" uid="uid://dw7tx33lhjfx1" path="res://icon.svg" id="2_lymsv"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_qk68r")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(132, 111)
+texture = ExtResource("2_lymsv")
