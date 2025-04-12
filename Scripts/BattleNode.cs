@@ -17,26 +17,44 @@ public partial class BattleNode : Node
 		GD.Print(subjects.ToString());
 		GD.Print(enemySubjects.ToString());
 		setupButtons();
-		List<Task> moveTasks = new();
-		// UnitInstance unitInstance = game.subjects.unitInstances[game.subjects.unitTypes[0]][0];
-		// UnitInstance enemyInstance = game.enemySubjects.unitInstances[game.enemySubjects.unitTypes[0]][0];
+		await battle();
+		// UnitInstance unitInstance = subjects.unitInstances[subjects.unitTypes[0]][0];
+		// UnitInstance enemyInstance = enemySubjects.unitInstances[enemySubjects.unitTypes[0]][0];
 		// moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
 		// moveTasks.Add(enemyInstance.moveToEnemy(enemyInstance.findTarget()));
-		foreach (Unit unitType in game.subjects.unitTypes)
+		GD.Print("BATTLE OVER");
+	}
+
+	public async Task battle()
+	{
+		Dictionary<Unit, int> currentInstanceCounts = new Dictionary<Unit, int>();
+		foreach (var pair in subjects.unitInstances)
 		{
-			foreach (UnitInstance unitInstance in game.subjects.unitInstances[unitType])
+			currentInstanceCounts[pair.Key] = pair.Value.Count;
+		}
+		Dictionary<Unit, int> currentEnemyCounts = new Dictionary<Unit, int>();
+		foreach (var pair in enemySubjects.unitInstances)
+		{
+			currentEnemyCounts[pair.Key] = pair.Value.Count;
+		}
+		List<Task> moveTasks = new();
+		foreach (Unit unitType in subjects.unitTypes)
+		{
+			foreach (UnitInstance unitInstance in subjects.unitInstances[unitType])
 			{
 				moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
 			}
 		}
-		foreach (Unit unitType in game.enemySubjects.unitTypes)
+		foreach (Unit unitType in enemySubjects.unitTypes)
 		{
-			foreach(UnitInstance unitInstance in game.enemySubjects.unitInstances[unitType])
+			foreach(UnitInstance unitInstance in enemySubjects.unitInstances[unitType])
 			{
 				moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
 			}
 		}
 		await Task.WhenAll(moveTasks);
+		subjects.instantiateUnits(currentInstanceCounts);
+		enemySubjects.instantiateUnits(currentEnemyCounts);
 	}
 
 	public void setupButtons()

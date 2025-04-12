@@ -10,9 +10,10 @@ public partial class Murderer : Unit
         name = "Murderer";
         stats["attack"] = 3;
         stats["health"] = 10;
+        stats["movement speed"] = 2;
     }
 
-    public Murderer(int quantity, Dictionary<string, int> stats = null) : base(quantity, stats) 
+    public Murderer(int quantity, Dictionary<string, float> stats = null) : base(quantity, stats) 
     {        
         name = "Murderer";
     }
@@ -30,11 +31,12 @@ public partial class Looter : Unit
     {        
         name = "Looter";
         stats["attack"] = 1;
-        stats["health"] = 10;
+        stats["attack speed"] = 1.25f;
+        stats["health"] = 8;
         stats["movement speed"] = 3;
     }
 
-    public Looter(int quantity, Dictionary<string, int> stats = null) : base(quantity, stats) 
+    public Looter(int quantity, Dictionary<string, float> stats = null) : base(quantity, stats) 
     {        
         name = "Looter";
     }

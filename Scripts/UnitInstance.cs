@@ -9,10 +9,11 @@ public partial class UnitInstance
 	public Game game {get {return GameManager.Game;} }
 	public Unit unitType { get; set; }
 	public Node2D correspondingNode { get; set; }
-	public int health { get; set; }
-	public int attackSpeed { get; set; }
-	public int attack { get; set; }
+	public float health { get; set; }
+	public float attackSpeed { get; set; }
+	public float attack { get; set; }
 	public bool isEnemy { get; set; }
+	public const float UNIT_RANGE = 20f;
 
 	public UnitInstance(Unit unitType, Node2D correspondingNode)
 	{
@@ -25,6 +26,7 @@ public partial class UnitInstance
 
 	public UnitInstance findTarget()
 	{
+		GD.Print("Finding target");
 		List<UnitInstance> enemies = isEnemy
 			? game.subjects.unitInstances.SelectMany(kvp => kvp.Value).ToList()
 			: game.enemySubjects.unitInstances.SelectMany(kvp => kvp.Value).ToList();
@@ -36,8 +38,9 @@ public partial class UnitInstance
 
 		foreach (var enemy in enemies)
 		{
-			Vector2 enemyPos = enemy.correspondingNode.Position;
-			float distance = myPos.DistanceTo(enemyPos);
+			if (enemy.health <= 0) continue;
+
+			float distance = myPos.DistanceTo(enemy.correspondingNode.Position);
 			if (distance < closestDistance)
 			{
 				closestDistance = distance;
@@ -50,45 +53,79 @@ public partial class UnitInstance
 
 	public async Task moveToEnemy(UnitInstance enemy)
 	{
-		if (enemy == null || enemy.health <= 0)
-			enemy = findTarget();
-
 		float speed = unitType.stats["movement speed"] * 50f;
 
-		while (enemy.health > 0)
+		while (health > 0)
 		{
-			Vector2 currentPosition = correspondingNode.Position;
-			Vector2 enemyPosition = enemy.correspondingNode.Position;
-
-			float step = speed * (float)correspondingNode.GetProcessDeltaTime();
-			Vector2 nextPosition = currentPosition.MoveToward(enemyPosition, step);
-			correspondingNode.Position = nextPosition;
-
-			if (currentPosition.DistanceTo(enemyPosition) < 1f)
+			if (enemy == null || enemy.health <= 0)
 			{
-				await attackEnemy(enemy);
-				break;
+				enemy = findTarget();
+				if (enemy == null || enemy.health <= 0)
+					return;
 			}
 
-			await correspondingNode.ToSignal(correspondingNode.GetTree(), "process_frame");
+			while (enemy.health > 0)
+			{
+				Vector2 currentPosition = correspondingNode.Position;
+				Vector2 enemyPosition = enemy.correspondingNode.Position;
+
+				var potentialNewTarget = findTarget();
+				if (potentialNewTarget != null && potentialNewTarget != enemy && potentialNewTarget.health > 0)
+				{
+					float newDistance = currentPosition.DistanceTo(potentialNewTarget.correspondingNode.Position);
+					float currentDistance = currentPosition.DistanceTo(enemy.correspondingNode.Position);
+					if (newDistance + 5f < currentDistance)
+					{
+						GD.Print("Switching to closer target.");
+						enemy = potentialNewTarget;
+						break;
+					}
+				}
+
+				float step = speed * (float)correspondingNode.GetProcessDeltaTime();
+				Vector2 nextPosition = currentPosition.MoveToward(enemyPosition, step);
+				correspondingNode.Position = nextPosition;
+
+				if (currentPosition.DistanceTo(enemyPosition) < UNIT_RANGE)
+				{
+					await attackEnemy(enemy);
+					break;
+				}
+
+				await correspondingNode.ToSignal(correspondingNode.GetTree(), "process_frame");
+			}
 		}
 	}
 
 	public async Task attackEnemy(UnitInstance enemy)
 	{
-		while (enemy.health > 0)
+		while (health > 0 && enemy != null && enemy.health > 0)
 		{
-			GD.Print("take damage");
+			float distance = correspondingNode.Position.DistanceTo(enemy.correspondingNode.Position);
+			if (distance > UNIT_RANGE)
+			{
+				GD.Print("Enemy out of range, chasing again.");
+				break;
+			}
 			enemy.health -= attack;
+			GD.Print($"{(isEnemy ? "Enemy" : "Ally")} attacked {(enemy.isEnemy ? "enemy" : "unit")}! Target health: {enemy.health}");
+
+			if (enemy.health <= 0)
+			{
+				enemy.die();
+				return;
+			}
+
 			float delaySeconds = 1f / attackSpeed;
 			await correspondingNode.ToSignal(correspondingNode.GetTree().CreateTimer(delaySeconds), "timeout");
 		}
-		enemy.die();
 	}
 
 	public void die()
 	{
-		GD.Print("died");
-		// temporarily remove instance - copy instances before/after battle
+		(isEnemy ? game.enemySubjects.unitInstances[unitType] : game.subjects.unitInstances[unitType]).Remove(this);
+		correspondingNode.QueueFree();
+		correspondingNode = null;
+		GD.Print(isEnemy ? "Enemy died" : "Your unit died");
 	}
 }
