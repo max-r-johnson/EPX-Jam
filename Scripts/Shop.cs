@@ -7,37 +7,53 @@ using System.Linq;
 public partial class Shop
 {
     public HashSet<Upgrade> availableUpgrades { get; set; }
-    public List<Upgrade> currentUpgrades { get; set; }
-    public int rollAmount { get; set; }
+    public List<Upgrade> currentUpgrades { get; set; } = [];
     public Game game {get {return GameManager.Game;}}
-    public int shopSize { get; set; }
-    public int dupLimit { get; set; }
+    public int spentLives { get; set; }
+    public const int ROLL_AMOUNT = 1;
+    public const int SHOP_SIZE = 6;
+    public const int DUPE_LIMIT = 2;
     public Shop()
     {
-        rollAmount = 1;
-        shopSize = 6;
-        dupLimit = 2;
+        availableUpgrades = new HashSet<Upgrade>
+        {
+            new MurdererUpgrade(),
+            new LooterUpgrade(),
+            new Pride(),
+            new Wrath(),
+            new Sloth(),
+            new Lust(),
+            new Greed(),
+            new Envy(),
+            new Gluttony(),
+        };
     }
 
-    public void rollShop()
+    public void refreshShop()
     {
-        game.subjects.decLives(rollAmount);
-        Random random = new Random();
-        int remainder = shopSize;
-        for (int i = remainder; i > 0; i--)
+        currentUpgrades = [];
+        while (currentUpgrades.Count < SHOP_SIZE && availableUpgrades.Count > 0)
         {
-            currentUpgrades.Add(availableUpgrades.ElementAt(random.Next(availableUpgrades.Count)));
-            if currentUpgrades[-1].Count() > dupLimit:
+            int index = GD.RandRange(0, availableUpgrades.Count - 1);
+            Upgrade selected = availableUpgrades.ElementAt(index);
+
+            int count = currentUpgrades.Count(u => u == selected);
+            if (count < DUPE_LIMIT)
             {
-                currentUpgrades.RemoveAt(-1);
-                remainder++;
+                currentUpgrades.Add(selected);
             }
         }
-        //Display currentUpgrades
+        foreach (Upgrade upgrade in currentUpgrades)
+        {
+            GD.Print(upgrade.GetType());
+        }
+        GD.Print("\n");
     }
 
-    //Roll shop after each round and at start of game, or after reroll
-    //For each roll, take upgrades from availableUpgrades, add them to currentUpgrades, and display them
-    //Randomly display 6 upgrades, possibly reduce to 4, duplicates allowed but no more than 2
-    //Upgrade is an object
+    public void closeShop()
+    {
+        game.subjects.decLives(spentLives);
+		spentLives = 0;
+		GD.Print(game.subjects.ToString());
+    }
 }

@@ -4,9 +4,9 @@ using System;
 public partial class BattleNode : Node
 {
 	public Game game {get {return GameManager.Game;}}
+	public Shop shop {get {return game.shop;}}
 	public Subjects subjects {get; set;}
 	public Subjects enemySubjects {get; set;}
-	public int spentLives {get; set;} = 0;
 	public override void _Ready()
 	{
 		game.currentNode = this;
@@ -31,14 +31,13 @@ public partial class BattleNode : Node
 
 	private void OnRefresh()
 	{
-		spentLives += 1;
+		shop.spentLives += Shop.ROLL_AMOUNT;
+		shop.refreshShop();
 	}
 
 	private void OnCloseShop()
 	{
-		subjects.decLives(spentLives);
-		spentLives = 0;
-		GD.Print(subjects.ToString());
+		shop.closeShop();
 	}
 
 	private void OnEndTurn()
