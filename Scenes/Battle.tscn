@@ -18,3 +18,10 @@ offset_top = 520.0
 offset_right = 628.0
 offset_bottom = 550.0
 text = "End Turn"
+
+[node name="Close Shop" type="Button" parent="."]
+offset_left = 784.0
+offset_top = 528.0
+offset_right = 877.0
+offset_bottom = 559.0
+text = "Close Shop"

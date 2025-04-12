@@ -4,13 +4,14 @@ using System;
 public partial class BattleNode : Node
 {
 	public Game game {get {return GameManager.Game;}}
-	public Subjects subjects {get {return game.subjects;}}
-	public Subjects enemySubjects {get {return game.enemySubjects;}}
+	public Subjects subjects {get; set;}
+	public Subjects enemySubjects {get; set;}
+	public int spentLives {get; set;} = 0;
 	public override void _Ready()
 	{
 		game.currentNode = this;
-		subjects.instantiateUnits();
-		enemySubjects.instantiateUnits();
+		subjects = new Subjects([new Murderer(), new Looter()], false);
+		enemySubjects = new Subjects([new Murderer()], true);
 		GD.Print(subjects.ToString());
 		GD.Print(enemySubjects.ToString());
 		setupButtons();
@@ -21,13 +22,22 @@ public partial class BattleNode : Node
 		Button refresh = GetNode<Button>("Refresh");
 		refresh.Pressed += OnRefresh;
 
+		Button closeShop = GetNode<Button>("Close Shop");
+		closeShop.Pressed += OnCloseShop;
+
 		Button endTurn = GetNode<Button>("End Turn");
 		endTurn.Pressed += OnEndTurn;
 	}
 
 	private void OnRefresh()
 	{
-		subjects.decLives(1);
+		spentLives += 1;
+	}
+
+	private void OnCloseShop()
+	{
+		subjects.decLives(spentLives);
+		spentLives = 0;
 		GD.Print(subjects.ToString());
 	}
 

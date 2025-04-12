@@ -14,17 +14,13 @@ public partial class Game
     public Game()
     {
         shop = new Shop();
-        subjects = new Subjects([new Murderer(), new Looter()]);
-        subjects.isEnemy = false;
-        enemySubjects = new Subjects([new Murderer()]);
-        enemySubjects.isEnemy = true;
     }
 
     public void nextRound()
     {
         currentRound += 1;
-        enemySubjects = new Subjects([new Murderer(10)]);
-        enemySubjects.instantiateUnits();
+        enemySubjects = new Subjects([new Murderer(10)], true);
+        // enemySubjects.instantiateUnits();
     }
 
     public static void setNodeTexture(Node2D node, string text)
