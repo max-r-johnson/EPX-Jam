@@ -7,8 +7,7 @@ public partial class Unit
     public int attack { get; set; }
     public int speed { get; set; }
 	public Dictionary<string,int> stats { get; set; }
-    public virtual int baseQuantity => 1;
-    public int quantity { get; set; }
+	public virtual int baseQuantity { get; set; } = 1;
 	public string name { get; set; }
 	public Unit()
 	{
@@ -18,12 +17,11 @@ public partial class Unit
             { "speed", 1 },
 			{ "health", 1 }
         };
-		quantity = baseQuantity;
 	}
 
     public Unit(int quantity, Dictionary<string, int> stats = null)
     {
-        this.quantity = quantity;
+        baseQuantity = quantity;
 
         this.stats = stats ?? new Dictionary<string, int>
         {

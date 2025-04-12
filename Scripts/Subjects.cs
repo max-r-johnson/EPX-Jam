@@ -6,27 +6,29 @@ using System.Text;
 
 public partial class Subjects
 {
-	public Dictionary<Unit, int> unitQuantities { get; set; }
 	public List<Unit> unitTypes { get; set; }
-	public Game game {get {return GameManager.Game;}}
-	public List<UnitInstance> unitInstances { get; set; }
+	public Game game { get { return GameManager.Game; } }
+	public Dictionary<Unit, List<UnitInstance>> unitInstances { get; set; }
 	public bool isEnemy { get; set; }
+
+	public const int ROW_SIZE = 5;
+	public const int SPACING = 100;
+
 	public Subjects(List<Unit> units)
 	{
 		unitTypes = units;
-		unitQuantities = units.ToDictionary(unit => unit, unit => unit.quantity);
-		unitInstances = [];
+		unitInstances = units.ToDictionary(unit => unit, unit => new List<UnitInstance>());
 	}
 
 	public void incLives(int amount)
 	{
-		var currentWeights = new Dictionary<Unit, int>(unitQuantities);
-
+		var currentWeights = unitInstances.ToDictionary(pair => pair.Key, pair => pair.Value.Count);
 		int total = currentWeights.Values.Sum();
+		if (total == 0) return;
 
 		foreach (int i in GD.Range(amount))
 		{
-			int randomValue = GD.RandRange(0, total-1);
+			int randomValue = GD.RandRange(0, total - 1);
 			int cumulative = 0;
 
 			foreach (var pair in currentWeights)
@@ -41,21 +43,21 @@ public partial class Subjects
 		}
 	}
 
-	// Don't base off of existing weights, because there should be a larger chance the smaller group decrements after awhile
 	public void decLives(int amount)
 	{
 		foreach (int i in GD.Range(amount))
 		{
-			int total = unitQuantities.Values.Sum();
+			int total = totalInstances();
 			if (total == 0) break;
 
 			int randomValue = GD.RandRange(0, total - 1);
 			int cumulative = 0;
 
-			foreach (var pair in unitQuantities)
+			foreach (var pair in unitInstances)
 			{
-				cumulative += pair.Value;
-				if (randomValue < cumulative)
+				int count = pair.Value.Count;
+				cumulative += count;
+				if (randomValue < cumulative && count > 0)
 				{
 					removeUnitInstance(pair.Key);
 					break;
@@ -68,15 +70,10 @@ public partial class Subjects
 	{
 		foreach (Unit unit in unitTypes)
 		{
-			foreach (int i in GD.Range(unitQuantities[unit]))
+			foreach (int i in GD.Range(unit.baseQuantity))
 			{
 				addUnitInstance(unit);
 			}
-		}
-		GD.Print(unitInstances.Count);
-		foreach(int i in GD.Range(unitInstances.Count))
-		{
-			GD.Print(unitInstances[i]);
 		}
 	}
 
@@ -85,26 +82,38 @@ public partial class Subjects
 		var unitScene = GD.Load<PackedScene>("res://Scenes/Unit.tscn");
 		var unitNode = unitScene.Instantiate<Node2D>();
 		unitNode.Name = unit.name;
+
 		UnitInstance unitInstance = new UnitInstance(unit, unitNode);
-		unitInstances.Add(unitInstance);
-		int xPos = (isEnemy ? 2000 : 1000) + unitInstances.Count % 5 * 100;
-		int yPos = unitInstances.Count/5 * 100 + 500;
+		int count = totalInstances();
+		int xPos = (isEnemy ? 2000 : 1000) + count % ROW_SIZE * SPACING;
+		int yPos = count / ROW_SIZE * SPACING + 500;
 		unitNode.Position = new Vector2(xPos, yPos);
-		game.currentNode.AddChild(unitNode);        
-		unitQuantities[unit] += 1;
+
+		Game.setNodeTexture(unitNode, unit.name);
+		unitInstances[unit].Add(unitInstance);
+		game.currentNode.AddChild(unitNode);
 	}
 
 	public void removeUnitInstance(Unit unit)
 	{
-		unitQuantities[unit] -= 1;
+		if (unitInstances[unit].Count == 0) return;
+
+		var removedInstance = unitInstances[unit].Last();
+		unitInstances[unit].RemoveAt(unitInstances[unit].Count - 1);
+		removedInstance.correspondingNode.QueueFree();
+	}
+
+	public int totalInstances()
+	{
+		return unitInstances.Values.Sum(list => list.Count);
 	}
 
 	public override string ToString()
 	{
 		StringBuilder stringBuilder = new StringBuilder();
-		foreach (var pair in unitQuantities)
+		foreach (var pair in unitInstances)
 		{
-			stringBuilder.Append(pair.Key + ": " + pair.Value + "\n");
+			stringBuilder.AppendLine($"{pair.Key}: {pair.Value.Count}");
 		}
 		return stringBuilder.ToString();
 	}

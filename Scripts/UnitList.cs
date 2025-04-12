@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public partial class Murderer : Unit
 {
-    public override int baseQuantity => 4;
+    public override int baseQuantity { get; set; } = 4;
     public Murderer() : base() 
     {        
         name = "Murderer";
@@ -19,13 +19,12 @@ public partial class Murderer : Unit
     public override void upgrade()
     {
         stats["attack"] += 3;
-        quantity += 4;
     }
 }
 
 public partial class Looter : Unit
 {
-    public override int baseQuantity => 6;
+    public override int baseQuantity { get; set; } = 6;
     public Looter() : base() 
     {        
         name = "Looter";
@@ -40,6 +39,5 @@ public partial class Looter : Unit
     public override void upgrade()
     {
         stats["attack"] += 1;
-        quantity += 6;
     }
 }

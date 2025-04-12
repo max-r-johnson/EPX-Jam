@@ -8,13 +8,32 @@ public partial class BattleNode : Node
 	public Subjects enemySubjects {get {return game.enemySubjects;}}
 	public override void _Ready()
 	{
-		GameManager.Game.currentNode = this;
+		game.currentNode = this;
 		subjects.instantiateUnits();
 		enemySubjects.instantiateUnits();
-		// game.currentNode = this;
-		subjects.incLives(10);
 		GD.Print(subjects.ToString());
-		subjects.decLives(18);
+		GD.Print(enemySubjects.ToString());
+		setupButtons();
+	}
+
+	public void setupButtons()
+	{
+		Button refresh = GetNode<Button>("Refresh");
+		refresh.Pressed += OnRefresh;
+
+		Button endTurn = GetNode<Button>("End Turn");
+		endTurn.Pressed += OnEndTurn;
+	}
+
+	private void OnRefresh()
+	{
+		subjects.decLives(1);
+		GD.Print(subjects.ToString());
+	}
+
+	private void OnEndTurn()
+	{
+		subjects.incLives(10);
 		GD.Print(subjects.ToString());
 	}
 }

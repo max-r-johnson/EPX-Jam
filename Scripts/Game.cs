@@ -26,4 +26,13 @@ public partial class Game
         enemySubjects = new Subjects([new Murderer(10)]);
         enemySubjects.instantiateUnits();
     }
+
+    public static void setNodeTexture(Node2D node, string text)
+    {
+        Sprite2D sprite = (Sprite2D)node.GetChildren()[0];
+        sprite.Texture = (Texture2D)GD.Load("res://Sprites/" + text + ".png");
+        var desiredSize = new Vector2(96, 96);
+        var textureSize = sprite.Texture.GetSize();
+        sprite.Scale = desiredSize / textureSize;
+    }
 }
