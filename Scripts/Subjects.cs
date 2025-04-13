@@ -11,8 +11,8 @@ public partial class Subjects
 	public Dictionary<Unit, List<UnitInstance>> unitInstances { get; set; }
 	public bool isEnemy { get; set; }
 
-	public const int INIT_ROW_SIZE = 5;
-	public const int INIT_SPACING = 10;
+	public const int INIT_COL_SIZE = 5;
+	public const int INIT_SPACING = 30;
 
 	public Subjects(List<Unit> units, bool isEnemy)
 	{
@@ -99,37 +99,32 @@ public partial class Subjects
 
 	public void instantiateUnits(Dictionary<Unit, int> instUnitCounts)
 	{
-		int totalToAdd = 0;
-		Dictionary<Unit, int> remaining = new Dictionary<Unit, int>();
-
+		List<Unit> toInstantiate = new List<Unit>();
 		foreach (Unit unit in unitTypes)
 		{
 			int remainingCount = instUnitCounts[unit] - unitInstances[unit].Count;
-			if (remainingCount > 0)
+			for (int i = 0; i < remainingCount; i++)
 			{
-				remaining[unit] = remainingCount;
-				totalToAdd += remainingCount;
+				toInstantiate.Add(unit);
 			}
 		}
 
-		foreach (var pair in remaining)
+		for (int i = 0; i < toInstantiate.Count; i++)
 		{
-			for (int i = 0; i < pair.Value; i++)
-			{
-				addUnitInstance(pair.Key);
-			}
+			int j = GD.RandRange(i, toInstantiate.Count - 1);
+			(toInstantiate[i], toInstantiate[j]) = (toInstantiate[j], toInstantiate[i]);
 		}
 
 		List<UnitInstance> allInstances = new List<UnitInstance>();
-		foreach (Unit unit in unitTypes)
-		{
-			allInstances.AddRange(unitInstances[unit]);
-		}
 
-		for (int i = 0; i < allInstances.Count; i++)
+		foreach (Unit unit in toInstantiate)
 		{
-			int j = GD.RandRange(i, allInstances.Count - 1);
-			(allInstances[i], allInstances[j]) = (allInstances[j], allInstances[i]);
+			int oldCount = unitInstances[unit].Count;
+
+			addUnitInstance(unit);
+
+			UnitInstance newInstance = unitInstances[unit][oldCount];
+			allInstances.Add(newInstance);
 		}
 
 		for (int index = 0; index < allInstances.Count; index++)
@@ -167,10 +162,22 @@ public partial class Subjects
 
 	public void positionUnit(UnitInstance unitInstance, int currentCount)
 	{
-		int dynamicRowSize = INIT_ROW_SIZE + totalInstances() / 20;
-		int dynamicSpacing = Math.Max(30, INIT_SPACING - totalInstances() / 10);
-		int xPos = (isEnemy ? 700 : 452) + currentCount / dynamicRowSize * -dynamicSpacing;
-		int yPos = currentCount % dynamicRowSize * dynamicSpacing + 300;
+		int total = totalInstances();
+		int dynamicColSize = (int)Mathf.Ceil(Mathf.Sqrt(total));
+		int dynamicRowSize = (int)Mathf.Ceil((float)total / dynamicColSize);
+		int dynamicSpacing = INIT_SPACING - (int)(Mathf.Log(total + 1) * 2);
+		dynamicSpacing = Math.Max(20, dynamicSpacing);
+		
+		int col = currentCount % dynamicColSize;
+		int row = currentCount / dynamicColSize;
+
+		int rowOffset = row - dynamicRowSize / 2;
+
+		int direction = isEnemy ? 1 : -1;
+		int originX = isEnemy ? 600 : 300;
+		int xPos = originX + col * dynamicSpacing * direction;
+		int yPos = 250 + rowOffset * dynamicSpacing;
+
 		unitInstance.correspondingNode.Position = new Vector2(xPos, yPos);
 
 		Game.setNodeTexture(unitInstance.correspondingNode, unitInstance.unitType.name, new Vector2(30, 30));

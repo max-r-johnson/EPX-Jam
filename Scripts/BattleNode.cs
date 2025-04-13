@@ -12,7 +12,7 @@ public partial class BattleNode : Node
 	public Shop shop {get {return game.shop;}}
 	public Subjects subjects {get {return game.subjects;}}
 	public Subjects enemySubjects {get {return game.enemySubjects;}}
-	public override void _Ready()
+	public override async void _Ready()
 	{
 		game.currentNode = this;
 		Dictionary<Unit, int> currentCounts = new Dictionary<Unit, int>();
@@ -36,8 +36,9 @@ public partial class BattleNode : Node
 		game.enemySubjects.instantiateUnits(currentCounts);
 		GD.Print(subjects.ToString());
 		GD.Print(enemySubjects.ToString());
-		setupButtons();
 		shop.closeShop();
+		await Task.Delay(2000);
+		await battle();
 	}
 
 	public async Task battle()
@@ -90,20 +91,15 @@ public partial class BattleNode : Node
 
 	public void startTurn()
 	{
-		GD.Print("start turn");
 		subjects.incLives(shop.roundLives);
-		GD.Print("start turn");
 		if (greed.greedFlag == true)
 		{
 			subjects.incLives(greed.dividend);
 			greed.greedFlag = false;
 		}
-		GD.Print("start turn");
-		enemySubjects.incLives(1);
-		GD.Print("start turn");
+		enemySubjects.incLives(60);
 
 		shop.refreshShop();
-		GD.Print("start turn");
 		GetTree().ChangeSceneToFile("res://Scenes/Shop.tscn");
 	}
 
@@ -121,34 +117,5 @@ public partial class BattleNode : Node
 	{
 		return subjects.unitInstances.All(kvp => kvp.Value.All(u => u.health <= 0)) ||
 			enemySubjects.unitInstances.All(kvp => kvp.Value.All(u => u.health <= 0));
-	}
-
-	public void setupButtons()
-	{
-		Button endTurn = GetNode<Button>("End Turn");
-		endTurn.Pressed += OnEndTurn;
-	}
-
-	private void OnRefresh()
-	{
-		shop.spentLives += Shop.ROLL_AMOUNT;
-		shop.refreshShop();
-	}
-
-	private void OnCloseShop()
-	{
-		shop.closeShop();
-	}
-
-	private void OnEndTurn()
-	{
-		GD.Print(subjects.ToString());
-		// Include this button in the shop scene, instead have it navigate back to battle scene
-		_ = OnEndTurnAsync();
-	}
-
-	private async Task OnEndTurnAsync()
-	{
-		await battle();
 	}
 }
