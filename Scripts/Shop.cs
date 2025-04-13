@@ -10,6 +10,7 @@ public partial class Shop
 	public List<Upgrade> currentUpgrades { get; set; } = [];
 	public Game game {get {return GameManager.Game;}}
 	public int spentLives { get; set; }
+	public int roundLives { get; set; } = INIT_ROUND_LIVES;
 	public const int ROLL_AMOUNT = 1;
 	public const int SHOP_SIZE = 6;
 	public const int DUPE_LIMIT = 2;

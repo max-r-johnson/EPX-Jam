@@ -11,8 +11,6 @@ public partial class UnitInstance
 	public Unit unitType { get; set; }
 	public Node2D correspondingNode { get; set; }
 	public float health { get; set; }
-	public float attackSpeed { get; set; }
-	public float attack { get; set; }
 	public bool isEnemy { get; set; }
 	public const float UNIT_RANGE = 20f;
 
@@ -21,8 +19,6 @@ public partial class UnitInstance
 		this.unitType = unitType;
 		this.correspondingNode = correspondingNode;
 		health = unitType.stats["health"];
-		attackSpeed = unitType.stats["attack speed"];
-		attack = unitType.stats["attack"];
 	}
 
 	public UnitInstance findTarget()
@@ -120,7 +116,7 @@ public partial class UnitInstance
 				break;
 			}
 
-			enemy.health -= attack;
+			enemy.health -= unitType.stats["attack"];
 
 			if (enemy.health <= 0)
 			{
@@ -128,7 +124,7 @@ public partial class UnitInstance
 				return;
 			}
 
-			float delaySeconds = 1f / attackSpeed;
+			float delaySeconds = 1f / unitType.stats["attack speed"];
 			var timer = correspondingNode.GetTree().CreateTimer(delaySeconds);
 			bool waited = await AwaitWithCancellation(timer.ToSignal(timer, "timeout"), token);
 			if (!waited)
