@@ -1,11 +1,13 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class MurdererUpgrade : Upgrade
 {
     public MurdererUpgrade() : base()
     {
         cost = 1;
+        game.subjects.unitTypes[0].stats[]
     }
 }
 

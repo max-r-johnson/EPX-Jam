@@ -9,9 +9,10 @@ public partial class ShopNode : Node
 	public Shop shop {get {return game.shop;}}
 	public Subjects subjects {get {return game.subjects;}}
 	public Subjects enemySubjects {get {return game.enemySubjects;}}
-	public override async void _Ready()
+	public override void _Ready()
 	{
         game.currentNode = this;
+        setupButtons();
     }
 
     public void setupButtons()
@@ -21,7 +22,7 @@ public partial class ShopNode : Node
 
 		Button closeShop = GetNode<Button>("Close Shop");
 		closeShop.Pressed += OnCloseShop;
-        
+
 		Button item1 = GetNode<Button>("Button");
 		item1.Pressed += OnItem1;
 
@@ -80,5 +81,6 @@ public partial class ShopNode : Node
 	private void OnCloseShop()
 	{
 		shop.closeShop();
+        GetTree().ChangeSceneToFile("res://Battle.tscn");
 	}
 }
