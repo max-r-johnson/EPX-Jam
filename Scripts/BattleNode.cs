@@ -75,7 +75,7 @@ public partial class BattleNode : Node
 		subjects.incLives(roundLives);
 		enemySubjects.incLives(Shop.INIT_ROUND_LIVES);
 		shop.refreshShop();
-		// Navigate to shop scene
+		GetTree().ChangeSceneToFile("res://Shop.tscn");
 	}
 
 	private async Task ExecuteMoveTask(UnitInstance unitInstance, CancellationToken token)
