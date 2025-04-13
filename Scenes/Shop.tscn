@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://1qwr4wisjuo3"]
+[gd_scene load_steps=11 format=3 uid="uid://bb0ttmu3p0lic"]
 
 [ext_resource type="Script" uid="uid://c45mkw5ne408n" path="res://Scripts/ShopNode.cs" id="1_lagin"]
 [ext_resource type="Texture2D" uid="uid://b8v1lrpbghs1v" path="res://icon.svg" id="2_iidq5"]
@@ -8,6 +8,7 @@
 [ext_resource type="LabelSettings" uid="uid://indppj7j66xy" path="res://LabelSettings/Description.tres" id="5_wndna"]
 [ext_resource type="LabelSettings" uid="uid://c4h01b4m8cl7j" path="res://LabelSettings/SecretHeading.tres" id="7_2aaoe"]
 [ext_resource type="LabelSettings" uid="uid://ci8s2ddd6jpep" path="res://LabelSettings/RollHeading.tres" id="7_ckylj"]
+[ext_resource type="Texture2D" uid="uid://dltm3ko3mlw2o" path="res://Sprites/Vodoo.png" id="7_ct2yw"]
 
 [sub_resource type="Theme" id="Theme_7ae35"]
 
@@ -118,8 +119,8 @@ label_settings = ExtResource("4_e5ji4")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Pentagram/ColorRect1/Upgrade1/Label3"]
 position = Vector2(28, 15)
-scale = Vector2(0.201563, 0.2)
-texture = ExtResource("2_iidq5")
+scale = Vector2(1, 0.99)
+texture = ExtResource("7_ct2yw")
 
 [node name="SecretLabel" type="Label" parent="Pentagram/ColorRect1/Upgrade1"]
 visible = false
@@ -191,8 +192,8 @@ label_settings = ExtResource("4_e5ji4")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Pentagram/ColorRect2/Upgrade2/Label3"]
 position = Vector2(28, 15)
-scale = Vector2(0.201563, 0.2)
-texture = ExtResource("2_iidq5")
+scale = Vector2(1, 0.99)
+texture = ExtResource("7_ct2yw")
 
 [node name="SecretLabel" type="Label" parent="Pentagram/ColorRect2/Upgrade2"]
 visible = false
@@ -264,8 +265,8 @@ label_settings = ExtResource("4_e5ji4")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Pentagram/ColorRect3/Upgrade3/Label3"]
 position = Vector2(28, 15)
-scale = Vector2(0.201563, 0.2)
-texture = ExtResource("2_iidq5")
+scale = Vector2(1, 0.99)
+texture = ExtResource("7_ct2yw")
 
 [node name="SecretLabel" type="Label" parent="Pentagram/ColorRect3/Upgrade3"]
 visible = false
@@ -310,8 +311,8 @@ label_settings = ExtResource("4_e5ji4")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Pentagram/ColorRect4/Upgrade4/Label3"]
 position = Vector2(28, 15)
-scale = Vector2(0.201563, 0.2)
-texture = ExtResource("2_iidq5")
+scale = Vector2(1, 0.99)
+texture = ExtResource("7_ct2yw")
 
 [node name="Sprite2D" type="Sprite2D" parent="Pentagram/ColorRect4/Upgrade4"]
 position = Vector2(70, 48)
@@ -410,8 +411,8 @@ label_settings = ExtResource("4_e5ji4")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Pentagram/ColorRect5/Upgrade5/Label3"]
 position = Vector2(28, 15)
-scale = Vector2(0.201563, 0.2)
-texture = ExtResource("2_iidq5")
+scale = Vector2(1, 0.99)
+texture = ExtResource("7_ct2yw")
 
 [node name="SecretLabel" type="Label" parent="Pentagram/ColorRect5/Upgrade5"]
 visible = false
@@ -438,8 +439,8 @@ theme_override_font_sizes/font_size = 40
 
 [node name="Sprite2D" type="Sprite2D" parent="Pentagram/Refresh"]
 position = Vector2(45, 45)
-scale = Vector2(0.7, 0.7)
-texture = ExtResource("2_iidq5")
+scale = Vector2(3, 3)
+texture = ExtResource("7_ct2yw")
 
 [node name="Label" type="Label" parent="Pentagram/Refresh"]
 layout_mode = 1
