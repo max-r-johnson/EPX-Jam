@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bb0ttmu3p0lic"]
+[gd_scene load_steps=9 format=3 uid="uid://1qwr4wisjuo3"]
 
 [ext_resource type="Script" uid="uid://c45mkw5ne408n" path="res://Scripts/ShopNode.cs" id="1_lagin"]
 [ext_resource type="Texture2D" uid="uid://b8v1lrpbghs1v" path="res://icon.svg" id="2_iidq5"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://f8gufevf0hgq" path="res://Sprites/PentagramMed.png" id="4_ckylj"]
 [ext_resource type="LabelSettings" uid="uid://dv0gmkcyfy3x3" path="res://Scenes/Heading.tres" id="4_e5ji4"]
 [ext_resource type="LabelSettings" uid="uid://indppj7j66xy" path="res://Scenes/Description.tres" id="5_wndna"]
+[ext_resource type="LabelSettings" uid="uid://ci8s2ddd6jpep" path="res://Scenes/RollHeading.tres" id="7_ckylj"]
 
 [sub_resource type="Theme" id="Theme_7ae35"]
 
@@ -54,9 +55,9 @@ anchor_top = 0.015
 anchor_right = 0.24
 anchor_bottom = 0.015
 offset_left = -0.480011
-offset_top = 0.28
+offset_top = 15.28
 offset_right = 599.52
-offset_bottom = 600.28
+offset_bottom = 615.28
 texture = ExtResource("4_ckylj")
 
 [node name="ColorRect1" type="ColorRect" parent="Pentagram"]
@@ -391,7 +392,7 @@ offset_top = 8.99
 offset_right = 149.97
 offset_bottom = 40.99
 text = "5 Lives"
-label_settings = ExtResource("4_e5ji4")
+label_settings = ExtResource("7_ckylj")
 horizontal_alignment = 1
 
 [node name="Sprite2D2" type="Sprite2D" parent="Pentagram/Refresh"]
