@@ -11,6 +11,7 @@ public partial class BattleNode : Node
 	public Shop shop {get {return game.shop;}}
 	public Subjects subjects {get {return game.subjects;}}
 	public Subjects enemySubjects {get {return game.enemySubjects;}}
+	public int roundLives {get; set; } = Shop.INIT_ROUND_LIVES;
 	public override async void _Ready()
 	{
 		game.currentNode = this;
@@ -60,14 +61,21 @@ public partial class BattleNode : Node
 					cts.Cancel();
 					break;
 				}
-				await Task.Delay(5);
+				await Task.Delay(500);
 			}
 		});
 
 		await Task.WhenAll(moveTasks);
-
 		subjects.instantiateUnits(currentInstanceCounts);
 		enemySubjects.instantiateUnits(currentEnemyCounts);
+		startTurn();
+	}
+
+	public void startTurn()
+	{
+		subjects.incLives(roundLives);
+		shop.refreshShop();
+		// Navigate to shop scene
 	}
 
 	private async Task ExecuteMoveTask(UnitInstance unitInstance, CancellationToken token)
@@ -96,6 +104,16 @@ public partial class BattleNode : Node
 
 		Button endTurn = GetNode<Button>("End Turn");
 		endTurn.Pressed += OnEndTurn;
+
+		// Temp button
+		Button lust = GetNode<Button>("Button");
+		lust.Pressed += OnLust;
+	}
+
+	private void OnLust()
+	{
+		roundLives += 1;
+		GD.Print("new round lives: " + roundLives);
 	}
 
 	private void OnRefresh()
@@ -111,7 +129,13 @@ public partial class BattleNode : Node
 
 	private void OnEndTurn()
 	{
-		subjects.incLives(10);
 		GD.Print(subjects.ToString());
+		// Include this button in the shop scene, instead have it navigate back to battle scene
+		_ = OnEndTurnAsync();
+	}
+
+	private async Task OnEndTurnAsync()
+	{
+		await battle();
 	}
 }

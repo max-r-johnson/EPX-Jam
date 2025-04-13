@@ -13,6 +13,7 @@ public partial class Shop
 	public const int ROLL_AMOUNT = 1;
 	public const int SHOP_SIZE = 6;
 	public const int DUPE_LIMIT = 2;
+	public const int INIT_ROUND_LIVES = 10;
 	public Shop()
 	{
 		availableUpgrades = new HashSet<Upgrade>
