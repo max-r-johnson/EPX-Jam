@@ -1,7 +1,9 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 public partial class BattleNode : Node
 {
@@ -18,43 +20,70 @@ public partial class BattleNode : Node
 		GD.Print(enemySubjects.ToString());
 		setupButtons();
 		await battle();
-		// UnitInstance unitInstance = subjects.unitInstances[subjects.unitTypes[0]][0];
-		// UnitInstance enemyInstance = enemySubjects.unitInstances[enemySubjects.unitTypes[0]][0];
-		// moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
-		// moveTasks.Add(enemyInstance.moveToEnemy(enemyInstance.findTarget()));
-		GD.Print("BATTLE OVER");
 	}
 
 	public async Task battle()
 	{
-		Dictionary<Unit, int> currentInstanceCounts = new Dictionary<Unit, int>();
+		Dictionary<Unit, int> currentInstanceCounts = new();
 		foreach (var pair in subjects.unitInstances)
-		{
 			currentInstanceCounts[pair.Key] = pair.Value.Count;
-		}
-		Dictionary<Unit, int> currentEnemyCounts = new Dictionary<Unit, int>();
+
+		Dictionary<Unit, int> currentEnemyCounts = new();
 		foreach (var pair in enemySubjects.unitInstances)
-		{
 			currentEnemyCounts[pair.Key] = pair.Value.Count;
-		}
+
+		CancellationTokenSource cts = new();
 		List<Task> moveTasks = new();
+
 		foreach (Unit unitType in subjects.unitTypes)
 		{
 			foreach (UnitInstance unitInstance in subjects.unitInstances[unitType])
 			{
-				moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
+				moveTasks.Add(ExecuteMoveTask(unitInstance, cts.Token));
 			}
 		}
+
 		foreach (Unit unitType in enemySubjects.unitTypes)
 		{
-			foreach(UnitInstance unitInstance in enemySubjects.unitInstances[unitType])
+			foreach (UnitInstance unitInstance in enemySubjects.unitInstances[unitType])
 			{
-				moveTasks.Add(unitInstance.moveToEnemy(unitInstance.findTarget()));
+				moveTasks.Add(ExecuteMoveTask(unitInstance, cts.Token));
 			}
 		}
+
+		_ = Task.Run(async () =>
+		{
+			while (true)
+			{
+				if (AllUnitsDead())
+				{
+					cts.Cancel();
+					break;
+				}
+				await Task.Delay(5);
+			}
+		});
+
 		await Task.WhenAll(moveTasks);
+
 		subjects.instantiateUnits(currentInstanceCounts);
 		enemySubjects.instantiateUnits(currentEnemyCounts);
+	}
+
+	private async Task ExecuteMoveTask(UnitInstance unitInstance, CancellationToken token)
+	{
+		UnitInstance target = unitInstance.findTarget();
+
+		if (target != null)
+		{
+			await unitInstance.moveToEnemy(target, token);
+		}
+	}
+
+	private bool AllUnitsDead()
+	{
+		return subjects.unitInstances.All(kvp => kvp.Value.All(u => u.health <= 0)) ||
+			enemySubjects.unitInstances.All(kvp => kvp.Value.All(u => u.health <= 0));
 	}
 
 	public void setupButtons()
