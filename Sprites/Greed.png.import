@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2np7kg4rff3l"
-path="res://.godot/imported/Looter.png-b9fda5d2acabb9f8e1a6f1843743a6b4.ctex"
+uid="uid://be3xupa22rx7q"
+path="res://.godot/imported/Greed.png-c0b37f84c32338f725ba8527023489e1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Looter.png"
-dest_files=["res://.godot/imported/Looter.png-b9fda5d2acabb9f8e1a6f1843743a6b4.ctex"]
+source_file="res://Sprites/Greed.png"
+dest_files=["res://.godot/imported/Greed.png-c0b37f84c32338f725ba8527023489e1.ctex"]
 
 [params]
 

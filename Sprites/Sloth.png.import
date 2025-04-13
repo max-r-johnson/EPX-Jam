@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2np7kg4rff3l"
-path="res://.godot/imported/Looter.png-b9fda5d2acabb9f8e1a6f1843743a6b4.ctex"
+uid="uid://cujl8hcf5xdp5"
+path="res://.godot/imported/Sloth.png-87753a14a5daa9553bb532c83b91f9a8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Looter.png"
-dest_files=["res://.godot/imported/Looter.png-b9fda5d2acabb9f8e1a6f1843743a6b4.ctex"]
+source_file="res://Sprites/Sloth.png"
+dest_files=["res://.godot/imported/Sloth.png-87753a14a5daa9553bb532c83b91f9a8.ctex"]
 
 [params]
 

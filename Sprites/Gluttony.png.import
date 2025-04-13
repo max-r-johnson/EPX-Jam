@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2np7kg4rff3l"
-path="res://.godot/imported/Looter.png-b9fda5d2acabb9f8e1a6f1843743a6b4.ctex"
+uid="uid://bykta0dig8xim"
+path="res://.godot/imported/Gluttony.png-a29e5fc65478d693b2b9d91b8000c854.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Looter.png"
-dest_files=["res://.godot/imported/Looter.png-b9fda5d2acabb9f8e1a6f1843743a6b4.ctex"]
+source_file="res://Sprites/Gluttony.png"
+dest_files=["res://.godot/imported/Gluttony.png-a29e5fc65478d693b2b9d91b8000c854.ctex"]
 
 [params]
 

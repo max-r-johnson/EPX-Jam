@@ -12,7 +12,7 @@ public partial class Subjects
 	public bool isEnemy { get; set; }
 
 	public const int INIT_ROW_SIZE = 5;
-	public const int INIT_SPACING = 100;
+	public const int INIT_SPACING = 10;
 
 	public Subjects(List<Unit> units, bool isEnemy)
 	{
@@ -177,11 +177,11 @@ public partial class Subjects
 	{
 		int dynamicRowSize = INIT_ROW_SIZE + totalInstances() / 20;
 		int dynamicSpacing = Math.Max(30, INIT_SPACING - totalInstances() / 10);
-		int xPos = (isEnemy ? 2000 : 1000) + currentCount / dynamicRowSize * -dynamicSpacing;
-		int yPos = currentCount % dynamicRowSize * dynamicSpacing + 500;
+		int xPos = (isEnemy ? 700 : 452) + currentCount / dynamicRowSize * -dynamicSpacing;
+		int yPos = currentCount % dynamicRowSize * dynamicSpacing + 300;
 		unitInstance.correspondingNode.Position = new Vector2(xPos, yPos);
 
-		Game.setNodeTexture(unitInstance.correspondingNode, unitInstance.unitType.name);
+		Game.setNodeTexture(unitInstance.correspondingNode, unitInstance.unitType.name, new Vector2(30, 30));
 	}
 
 	public override string ToString()

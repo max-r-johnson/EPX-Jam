@@ -7,6 +7,7 @@ public partial class MurdererUpgrade : Upgrade
 {
     public MurdererUpgrade() : base()
     {
+        cost = 1;
         text = "Upgrade the base stats of your murderers.";
     }
 
@@ -23,6 +24,7 @@ public partial class LooterUpgrade : Upgrade
 {
     public LooterUpgrade() : base()
     {
+        cost = 1;
         text = "Upgrade the base stats of your looters.";
     }
     public override void upgradeMethod()
@@ -58,6 +60,7 @@ public partial class Wrath : Upgrade
 {
     public Wrath() : base()
     {
+        cost = 1;
         text = "Upgrade the attack of your units by 10%.";
     }
     public override void upgradeMethod()
