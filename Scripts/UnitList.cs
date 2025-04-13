@@ -38,3 +38,14 @@ public partial class Demon : Unit
         stats["health"] = 30;
     }
 }
+
+public partial class Lucifer : Unit
+{
+    public override int baseQuantity { get; set; } = 1;
+    public Lucifer() : base() 
+    {        
+        name = "Lucifer";
+        stats["attack"] = 50;
+        stats["health"] = 2000;
+    }
+}

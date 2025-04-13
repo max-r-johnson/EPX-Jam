@@ -134,6 +134,21 @@ public partial class BattleNode : Node
 			}
 			enemySubjects.instantiateUnits(currentCounts);
 		}
+		else if(game.currentRound==9)
+		{
+			enemySubjects.newUnit(new Lucifer());
+			Dictionary<Unit, int> currentCounts = new Dictionary<Unit, int>();
+			foreach (var pair in game.enemySubjects.unitInstances)
+			{
+				currentCounts[pair.Key] = pair.Value.Count;
+			}
+			foreach(Unit unitType in game.enemySubjects.unitTypes)
+			{
+				game.enemySubjects.unitInstances[unitType] = [];
+			}
+			enemySubjects.instantiateUnits(currentCounts);
+			return;
+		}
 		enemySubjects.incLives((int)Math.Floor(Shop.INIT_ROUND_LIVES * Math.Pow(1.01, game.currentRound)));
 	}
 
