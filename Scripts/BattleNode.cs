@@ -19,6 +19,7 @@ public partial class BattleNode : Node
 		GD.Print(subjects.ToString());
 		GD.Print(enemySubjects.ToString());
 		setupButtons();
+		shop.closeShop();
 	}
 
 	public async Task battle()
@@ -74,7 +75,7 @@ public partial class BattleNode : Node
 		subjects.incLives(shop.roundLives);
 		enemySubjects.incLives(Shop.INIT_ROUND_LIVES);
 		shop.refreshShop();
-		GetTree().ChangeSceneToFile("res://Shop.tscn");
+		GetTree().ChangeSceneToFile("res://Scenes/Shop.tscn");
 	}
 
 	private async Task ExecuteMoveTask(UnitInstance unitInstance, CancellationToken token)

@@ -6,29 +6,28 @@ using System.Threading.Tasks;
 
 public partial class Game
 {
-    public Shop shop {get; set;}
-    public Subjects subjects {get; set;}
-    public Subjects enemySubjects {get; set;}
-    public Node currentNode {get; set;}
-    public int currentRound {get; set;}
-    public Game()
-    {
-        shop = new Shop();
-    }
+	public Shop shop {get; set;}
+	public Subjects subjects {get; set;}
+	public Subjects enemySubjects {get; set;}
+	public Node currentNode {get; set;}
+	public int currentRound {get; set;}
+	public Game()
+	{
+		shop = new Shop();
+	}
 
-    public void nextRound()
-    {
-        currentRound += 1;
-        enemySubjects = new Subjects([new Murderer(10)], true);
-        // enemySubjects.instantiateUnits();
-    }
+	public void nextRound()
+	{
+		currentRound += 1;
+		enemySubjects = new Subjects([new Murderer(10)], true);
+		// enemySubjects.instantiateUnits();
+	}
 
-    public static void setNodeTexture(Node2D node, string text)
-    {
-        Sprite2D sprite = (Sprite2D)node.GetChildren()[0];
-        sprite.Texture = (Texture2D)GD.Load("res://Sprites/" + text + ".png");
-        var desiredSize = new Vector2(96, 96);
-        var textureSize = sprite.Texture.GetSize();
-        sprite.Scale = desiredSize / textureSize;
-    }
+	public static void setNodeTexture(Node node, string text, Vector2 desiredSize)
+	{
+		Sprite2D sprite = node.GetNode<Sprite2D>("Sprite2D");
+		sprite.Texture = (Texture2D)GD.Load("res://Sprites/" + text + ".png");
+		var textureSize = sprite.Texture.GetSize();
+		sprite.Scale = desiredSize / textureSize;
+	}
 }

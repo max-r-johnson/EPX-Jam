@@ -12,8 +12,8 @@ public partial class Shop
 	public int spentLives { get; set; }
 	public int roundLives { get; set; } = INIT_ROUND_LIVES;
 	public const int ROLL_AMOUNT = 1;
-	public const int SHOP_SIZE = 6;
-	public const int DUPE_LIMIT = 2;
+	public const int SHOP_SIZE = 5;
+	public const int DUPE_LIMIT = 1;
 	public const int INIT_ROUND_LIVES = 10;
 	public Shop()
 	{
@@ -40,7 +40,7 @@ public partial class Shop
 			Upgrade selected = availableUpgrades.ElementAt(index);
 
 			int count = currentUpgrades.Count(u => u == selected);
-			if (count < DUPE_LIMIT)
+			if (count <= DUPE_LIMIT)
 			{
 				currentUpgrades.Add(selected);
 			}
