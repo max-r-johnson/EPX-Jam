@@ -46,10 +46,10 @@ public partial class Pride : Upgrade
         foreach(Unit unitType in game.subjects.unitTypes)
         {
             unitTotal = game.subjects.unitInstances[unitType].Count;
-            unitType.stats["attack"] *= (float)(2 * Math.Pow(0.9f, unitTotal));
-            unitType.stats["health"] *= (float)(2 * Math.Pow(0.9f, unitTotal));
-            unitType.stats["attack speed"] *= (float)(2 * Math.Pow(0.9f, unitTotal));
-            unitType.stats["movement speed"] *= (float)(2 * Math.Pow(0.9f, unitTotal));
+            unitType.stats["attack"] *= (float)Math.Min(Math.Pow(0.97, unitTotal) + 1.1f, 1.5f);
+            unitType.stats["health"] *= (float)Math.Min(Math.Pow(0.97, unitTotal) + 1.1f, 1.5f);
+            unitType.stats["attack speed"] *= (float)Math.Min(Math.Pow(0.97, unitTotal) + 1.1f, 1.5f);
+            unitType.stats["movement speed"] *= (float)Math.Min(Math.Pow(0.97, unitTotal) + 1.1f, 1.5f);
         }
     }
 }
