@@ -25,17 +25,4 @@ public partial class Unit
 			{ "movement speed", 1},
         };
 	}
-
-    public Unit(int quantity, Dictionary<string, float> statModifiers = null)
-    {
-        baseQuantity = quantity;
-
-        this.statModifiers = statModifiers ?? new Dictionary<string, float>
-        {
-            { "attack", 1 },
-			{ "health", 1 },
-			{ "attack speed", 1 },
-			{ "movement speed", 1 },
-        };
-    }
 }

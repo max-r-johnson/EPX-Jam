@@ -18,7 +18,6 @@ public partial class UnitInstance
 	{
 		this.unitType = unitType;
 		this.correspondingNode = correspondingNode;
-		health = unitType.stats["health"] * unitType.statModifiers["health"];
 	}
 
 	public UnitInstance findTarget()
@@ -49,7 +48,7 @@ public partial class UnitInstance
 
 	public async Task moveToEnemy(UnitInstance enemy, CancellationToken token)
 	{
-		float speed = unitType.stats["movement speed"] * unitType.statModifiers["movement speed"] * 50f;
+		float speed = unitType.stats["movement speed"] * unitType.statModifiers["movement speed"] * (isEnemy ? game.enemyGlobalModifiers["movement speed"] : game.globalModifiers["movement speed"]) * 50f;
 
 		while (health > 0)
 		{
@@ -116,21 +115,29 @@ public partial class UnitInstance
 				break;
 			}
 
-			enemy.health -= unitType.stats["attack"] * unitType.statModifiers["attack"];
+			enemy.health -= unitType.stats["attack"] * unitType.statModifiers["attack"] * (isEnemy ? game.enemyGlobalModifiers["attack"] : game.globalModifiers["attack"]);
 
 			if (enemy.health <= 0)
 			{
 				enemy.die();
-				return;
+				break;
 			}
 
-			float delaySeconds = 1f / (unitType.stats["attack speed"] * unitType.statModifiers["attack speed"]);
+			float delaySeconds = 1f / (unitType.stats["attack speed"] * unitType.statModifiers["attack speed"] * (isEnemy ? game.enemyGlobalModifiers["attack speed"] : game.globalModifiers["attack speed"]));
 			var timer = correspondingNode.GetTree().CreateTimer(delaySeconds);
 			bool waited = await AwaitWithCancellation(timer.ToSignal(timer, "timeout"), token);
 			if (!waited)
 			{
 				return;
 			}
+		}
+		float finalDelaySeconds = 1f / (unitType.stats["attack speed"] * unitType.statModifiers["attack speed"] * (isEnemy ? game.enemyGlobalModifiers["attack speed"] : game.globalModifiers["attack speed"]));
+		var tree = (correspondingNode != null) ? correspondingNode.GetTree() : game.currentNode.GetTree();
+		var finalTimer = tree.CreateTimer(finalDelaySeconds);
+		bool finalWaited = await AwaitWithCancellation(finalTimer.ToSignal(finalTimer, "timeout"), token);
+		if (!finalWaited)
+		{
+			return;
 		}
 	}
 

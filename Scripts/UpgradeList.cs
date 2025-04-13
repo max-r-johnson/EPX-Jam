@@ -28,16 +28,9 @@ public partial class LootersFirst : Upgrade
 	public override void upgradeMethod()
 	{
 		Unit looter = new Looter();
-		game.subjects.unitTypes.Add(looter);
 		shop.availableUpgrades.Add(new LooterUpgrade());
 		shop.availableUpgrades.Remove(this);
-		game.subjects.unitInstances[looter] = [];
-		foreach(int i in GD.Range(looter.baseQuantity))
-		{
-			GD.Print(i);
-			UnitInstance unitInstance = new UnitInstance(looter, null);
-			game.subjects.unitInstances[looter].Add(unitInstance);
-		}
+		game.subjects.newUnit(looter);
 	}
 }
 
@@ -65,16 +58,9 @@ public partial class DemonsFirst : Upgrade
 	public override void upgradeMethod()
 	{
 		Unit demon = new Demon();
-		game.subjects.unitTypes.Add(demon);
 		shop.availableUpgrades.Add(new DemonUpgrade());
 		shop.availableUpgrades.Remove(this);
-		game.subjects.unitInstances[demon] = [];
-		foreach(int i in GD.Range(demon.baseQuantity))
-		{
-			GD.Print(i);
-			UnitInstance unitInstance = new UnitInstance(demon, null);
-			game.subjects.unitInstances[demon].Add(unitInstance);
-		}
+		game.subjects.newUnit(demon);
 	}
 }
 
@@ -104,8 +90,8 @@ public partial class Pride : Upgrade
 		foreach(Unit unitType in game.subjects.unitTypes)
 		{
 			int unitTotal = game.subjects.unitInstances[unitType].Count;
-			unitType.statModifiers["attack"] *= (float)Math.Min(Math.Pow(0.985, unitTotal) + 0.5, 1.2f);
-			unitType.statModifiers["health"] *= (float)Math.Min(Math.Pow(0.985, unitTotal) + 0.5, 1.2f);
+			game.globalModifiers["attack"] *= (float)Math.Min(Math.Pow(0.985, unitTotal) + 0.5, 1.2f);
+			game.globalModifiers["health"] *= (float)Math.Min(Math.Pow(0.985, unitTotal) + 0.5, 1.2f);
 		}
 	}
 }
@@ -118,10 +104,7 @@ public partial class Wrath : Upgrade
 	}
 	public override void upgradeMethod()
 	{
-		foreach(Unit unitType in game.subjects.unitTypes)
-		{
-			unitType.statModifiers["attack"] *= 1.1f;
-		}
+		game.globalModifiers["attack"] *= 1.1f;
 	}
 }
 
@@ -133,11 +116,8 @@ public partial class Sloth : Upgrade
 	}
 	public override void upgradeMethod()
 	{
-		foreach(Unit unitType in game.enemySubjects.unitTypes)
-		{
-			unitType.statModifiers["attack speed"] *= 0.9f;
-			unitType.statModifiers["movement speed"] *= 0.9f;
-		}
+		game.enemyGlobalModifiers["attack speed"] *= 0.9f;
+		game.enemyGlobalModifiers["movement speed"] *= 0.9f;
 	}
 }
 
@@ -195,10 +175,7 @@ public partial class Gluttony : Upgrade
 	}
 	public override void upgradeMethod()
 	{
-		foreach(Unit unitType in game.subjects.unitTypes)
-		{
-			unitType.statModifiers["health"] *= 1.1f;
-		}
+		game.globalModifiers["health"] *= 1.1f;
 	}
 }
 
@@ -226,16 +203,11 @@ public partial class AnubisScale : Upgrade
 				smallestForce = unitType;
 			}
 		}
-		GD.Print(largestForce.GetType().Name);
-		GD.Print(smallestForce.GetType().Name);
-		GD.Print(game.subjects);
 		foreach(int i in GD.Range(3))
 		{
-			GD.Print(i);
 			UnitInstance smallestUnitInstance = new UnitInstance(smallestForce, null);
 			game.subjects.unitInstances[smallestForce].Add(smallestUnitInstance);
 			game.subjects.unitInstances[largestForce].RemoveAt(game.subjects.unitInstances[largestForce].Count - 1);
 		}
-		GD.Print(game.subjects);
 	}
 }

@@ -23,14 +23,7 @@ public partial class BattleNode : Node
 		foreach(Unit unitType in game.subjects.unitTypes)
 		{
 			game.subjects.unitInstances[unitType] = [];
-			foreach(var pair in unitType.statModifiers)
-			{
-				GD.Print(pair.Key);
-				GD.Print(pair.Value);
-			}
-			GD.Print("------");
 		}
-		GD.Print("################");
 		game.subjects.instantiateUnits(currentCounts);
 		foreach (var pair in enemySubjects.unitInstances)
 		{
@@ -39,12 +32,6 @@ public partial class BattleNode : Node
 		foreach(Unit unitType in game.enemySubjects.unitTypes)
 		{
 			game.enemySubjects.unitInstances[unitType] = [];
-			foreach(var pair in unitType.statModifiers)
-			{
-				GD.Print(pair.Key);
-				GD.Print(pair.Value);
-				GD.Print("------");
-			}
 		}
 		game.enemySubjects.instantiateUnits(currentCounts);
 		GD.Print(subjects.ToString());
@@ -116,12 +103,38 @@ public partial class BattleNode : Node
 
 	public void scaleEnemies()
 	{
-		enemySubjects.incLives((int)Math.Floor(Shop.INIT_ROUND_LIVES * Math.Pow(1.01, game.currentRound)));
-		foreach(Unit unitType in enemySubjects.unitTypes)
+		game.enemyGlobalModifiers["health"] *= 1.025f;
+		game.enemyGlobalModifiers["attack"] *= 1.025f;
+		if(game.currentRound==2)
 		{
-			unitType.statModifiers["health"] *= 1.025f;
-			unitType.statModifiers["attack"] *= 1.025f;
+			enemySubjects.newUnit(new Looter());
+			Dictionary<Unit, int> currentCounts = new Dictionary<Unit, int>();
+			foreach (var pair in game.enemySubjects.unitInstances)
+			{
+				currentCounts[pair.Key] = pair.Value.Count;
+			}
+			foreach(Unit unitType in game.enemySubjects.unitTypes)
+			{
+				game.enemySubjects.unitInstances[unitType] = [];
+			}
+			enemySubjects.instantiateUnits(currentCounts);
+			return;
 		}
+		else if(game.currentRound==5)
+		{
+			enemySubjects.newUnit(new Demon());
+			Dictionary<Unit, int> currentCounts = new Dictionary<Unit, int>();
+			foreach (var pair in game.enemySubjects.unitInstances)
+			{
+				currentCounts[pair.Key] = pair.Value.Count;
+			}
+			foreach(Unit unitType in game.enemySubjects.unitTypes)
+			{
+				game.enemySubjects.unitInstances[unitType] = [];
+			}
+			enemySubjects.instantiateUnits(currentCounts);
+		}
+		enemySubjects.incLives((int)Math.Floor(Shop.INIT_ROUND_LIVES * Math.Pow(1.01, game.currentRound)));
 	}
 
 	private async Task ExecuteMoveTask(UnitInstance unitInstance, CancellationToken token)

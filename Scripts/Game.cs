@@ -11,8 +11,25 @@ public partial class Game
 	public Subjects enemySubjects {get; set;}
 	public Node currentNode {get; set;}
 	public int currentRound {get; set;}
+	public Dictionary<string,float> globalModifiers { get; set; }
+	public Dictionary<string,float> enemyGlobalModifiers { get; set; }
+
 	public Game()
 	{
+		globalModifiers = new Dictionary<string, float>
+		{
+			{ "attack", 1 },
+			{ "health", 1 },
+			{ "attack speed", 1 },
+			{ "movement speed", 1},
+		};
+		enemyGlobalModifiers = new Dictionary<string, float>
+		{
+			{ "attack", 1 },
+			{ "health", 1 },
+			{ "attack speed", 1 },
+			{ "movement speed", 1},
+		};
 		shop = new Shop();
 		subjects = new Subjects([new Murderer()], false);
 		enemySubjects = new Subjects([new Murderer()], true);
