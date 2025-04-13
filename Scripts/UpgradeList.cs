@@ -42,7 +42,15 @@ public partial class Pride : Upgrade
     }
     public override void upgradeMethod()
     {
-        
+        int unitTotal = 0;
+        foreach(Unit unitType in game.subjects.unitTypes)
+        {
+            unitTotal = game.subjects.unitInstances[unitType].Count;
+            unitType.stats["attack"] *= (float)(2 * Math.Pow(0.9f, unitTotal));
+            unitType.stats["health"] *= (float)(2 * Math.Pow(0.9f, unitTotal));
+            unitType.stats["attack speed"] *= (float)(2 * Math.Pow(0.9f, unitTotal));
+            unitType.stats["movement speed"] *= (float)(2 * Math.Pow(0.9f, unitTotal));
+        }
     }
 }
 
