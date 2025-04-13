@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://s18tyjx8poe8"]
+
+[ext_resource type="FontFile" uid="uid://caip0gtrbidc" path="res://Fonts/Kcora.ttf" id="1_1kkdo"]
+
+[resource]
+font = ExtResource("1_1kkdo")
+font_size = 50
+font_color = Color(0.776471, 0, 0, 1)
+outline_color = Color(0.776471, 0, 0, 1)

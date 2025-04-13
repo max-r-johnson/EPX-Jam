@@ -23,7 +23,7 @@ public partial class LootersFirst : Upgrade
 {
 	public LootersFirst() : base()
 	{
-		text = "Add a fast mob of looters to your sinners.";
+		text = "Recruit a mob of money-hungry looters.";
 	}
 	public override void upgradeMethod()
 	{
@@ -53,7 +53,7 @@ public partial class DemonsFirst : Upgrade
 {
 	public DemonsFirst() : base()
 	{
-		text = "Add a fast mob of looters to your sinners.";
+		text = "Recruit demons spawned freshly from the fires of Hell.";
 	}
 	public override void upgradeMethod()
 	{

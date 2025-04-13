@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="EPX Game Jam"
-run/main_scene="uid://cy6gnau7t0464"
+run/main_scene="uid://cxo0nhboc41bp"
 config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -20,9 +20,9 @@ config/icon="res://icon.svg"
 GameManager="*res://Scripts/GameManager.cs"
 
 [display]
- 
- window/stretch/mode="viewport"
- window/stretch/aspect="expand"
+
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [dotnet]
 

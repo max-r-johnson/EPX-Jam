@@ -1,0 +1,80 @@
+[gd_scene load_steps=5 format=3 uid="uid://mv4s6is6a16g"]
+
+[ext_resource type="Texture2D" uid="uid://btn885c6a5xnd" path="res://Sprites/RustTexture.png" id="1_3edat"]
+[ext_resource type="Script" uid="uid://gyomhsgwxi3g" path="res://Scripts/IntroNode.cs" id="1_d0kpp"]
+[ext_resource type="LabelSettings" uid="uid://nq3ayx34ptdp" path="res://LabelSettings/Title.tres" id="2_vmpge"]
+[ext_resource type="LabelSettings" uid="uid://s18tyjx8poe8" path="res://LabelSettings/BigDescription.tres" id="3_d0kpp"]
+
+[node name="Control" type="CanvasLayer"]
+script = ExtResource("1_d0kpp")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_3edat")
+
+[node name="ColorRect" type="ColorRect" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.611765)
+
+[node name="Label" type="Label" parent="TextureRect/ColorRect"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 30.0
+offset_right = 1636.0
+offset_bottom = 176.0
+scale = Vector2(0.7, 0.7)
+text = "Welcome to Hell."
+label_settings = ExtResource("2_vmpge")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="TextureRect/ColorRect"]
+offset_left = 3.0
+offset_top = 130.0
+offset_right = 1636.0
+offset_bottom = 276.0
+scale = Vector2(0.7, 0.7)
+text = "You are a demon king with the ambition of usurping Lucifer himself.
+
+Muster the sinners of Hell to defeat Lucifer's own forces and face him yourself,
+claiming his dominion over all of Hell.
+ 
+As you gather followers, you may sacrifice them to gain power.
+
+Be careful not to feast on too many souls - 
+you will need some to get through the hordes of the fallen."
+label_settings = ExtResource("3_d0kpp")
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="TextureRect/ColorRect"]
+layout_mode = 0
+offset_left = 420.0
+offset_top = 500.0
+offset_right = 720.0
+offset_bottom = 600.0
+color = Color(0, 0, 0, 1)
+
+[node name="Begin" type="Button" parent="TextureRect/ColorRect/ColorRect"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 100.0
+
+[node name="Label" type="Label" parent="TextureRect/ColorRect/ColorRect/Begin"]
+layout_mode = 0
+offset_right = 497.0
+offset_bottom = 162.0
+scale = Vector2(0.6, 0.6)
+text = "Begin"
+label_settings = ExtResource("2_vmpge")
+horizontal_alignment = 1
+vertical_alignment = 1
