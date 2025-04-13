@@ -11,7 +11,6 @@ public partial class BattleNode : Node
 	public Shop shop {get {return game.shop;}}
 	public Subjects subjects {get {return game.subjects;}}
 	public Subjects enemySubjects {get {return game.enemySubjects;}}
-	public int roundLives {get; set; } = Shop.INIT_ROUND_LIVES;
 	public override void _Ready()
 	{
 		game.currentNode = this;
@@ -72,7 +71,7 @@ public partial class BattleNode : Node
 
 	public void startTurn()
 	{
-		subjects.incLives(roundLives);
+		subjects.incLives(shop.roundLives);
 		enemySubjects.incLives(Shop.INIT_ROUND_LIVES);
 		shop.refreshShop();
 		// Navigate to shop scene
@@ -112,8 +111,8 @@ public partial class BattleNode : Node
 
 	private void OnLust()
 	{
-		roundLives += 1;
-		GD.Print("new round lives: " + roundLives);
+		new Lust().upgradeMethod();
+		new Wrath().upgradeMethod();
 	}
 
 	private void OnRefresh()

@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 public partial class Upgrade
 {
     public int cost { get; set; }
-    public Upgrade ()
+    public string text { get; set; }
+    public Game game { get { return GameManager.Game; }}
+    public Shop shop { get { return game.shop; }}
+    public Upgrade()
     {
-        cost = 1;
+        cost = 3;
+    }
+    
+    public virtual void upgradeMethod()
+    {
+        
     }
 }
