@@ -96,35 +96,8 @@ public partial class BattleNode : Node
 
 	public void setupButtons()
 	{
-		Button refresh = GetNode<Button>("Refresh");
-		refresh.Pressed += OnRefresh;
-
-		Button closeShop = GetNode<Button>("Close Shop");
-		closeShop.Pressed += OnCloseShop;
-
 		Button endTurn = GetNode<Button>("End Turn");
 		endTurn.Pressed += OnEndTurn;
-
-		// Temp button
-		Button lust = GetNode<Button>("Button");
-		lust.Pressed += OnLust;
-	}
-
-	private void OnLust()
-	{
-		roundLives += 1;
-		GD.Print("new round lives: " + roundLives);
-	}
-
-	private void OnRefresh()
-	{
-		shop.spentLives += Shop.ROLL_AMOUNT;
-		shop.refreshShop();
-	}
-
-	private void OnCloseShop()
-	{
-		shop.closeShop();
 	}
 
 	private void OnEndTurn()
