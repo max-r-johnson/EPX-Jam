@@ -2,11 +2,12 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 public partial class UnitInstance
 {
-	public Game game {get {return GameManager.Game;} }
+	public Game game { get { return GameManager.Game; } }
 	public Unit unitType { get; set; }
 	public Node2D correspondingNode { get; set; }
 	public float health { get; set; }
@@ -26,7 +27,6 @@ public partial class UnitInstance
 
 	public UnitInstance findTarget()
 	{
-		GD.Print("Finding target");
 		List<UnitInstance> enemies = isEnemy
 			? game.subjects.unitInstances.SelectMany(kvp => kvp.Value).ToList()
 			: game.enemySubjects.unitInstances.SelectMany(kvp => kvp.Value).ToList();
@@ -51,64 +51,76 @@ public partial class UnitInstance
 		return closest;
 	}
 
-	public async Task moveToEnemy(UnitInstance enemy)
+	public async Task moveToEnemy(UnitInstance enemy, CancellationToken token)
 	{
 		float speed = unitType.stats["movement speed"] * 50f;
 
 		while (health > 0)
 		{
+			if (token.IsCancellationRequested)
+			{
+				return;
+			}
+
 			if (enemy == null || enemy.health <= 0)
 			{
 				enemy = findTarget();
 				if (enemy == null || enemy.health <= 0)
+				{
 					return;
+				}
 			}
 
-			while (enemy.health > 0)
+			Vector2 currentPosition = correspondingNode.Position;
+			Vector2 enemyPosition = enemy.correspondingNode.Position;
+
+			var potentialNewTarget = findTarget();
+			if (potentialNewTarget != null && potentialNewTarget != enemy && potentialNewTarget.health > 0)
 			{
-				Vector2 currentPosition = correspondingNode.Position;
-				Vector2 enemyPosition = enemy.correspondingNode.Position;
-
-				var potentialNewTarget = findTarget();
-				if (potentialNewTarget != null && potentialNewTarget != enemy && potentialNewTarget.health > 0)
+				float newDistance = currentPosition.DistanceTo(potentialNewTarget.correspondingNode.Position);
+				float currentDistance = currentPosition.DistanceTo(enemyPosition);
+				if (newDistance + 5f < currentDistance)
 				{
-					float newDistance = currentPosition.DistanceTo(potentialNewTarget.correspondingNode.Position);
-					float currentDistance = currentPosition.DistanceTo(enemy.correspondingNode.Position);
-					if (newDistance + 5f < currentDistance)
-					{
-						GD.Print("Switching to closer target.");
-						enemy = potentialNewTarget;
-						break;
-					}
+					enemy = potentialNewTarget;
+					continue;
 				}
+			}
 
-				float step = speed * (float)correspondingNode.GetProcessDeltaTime();
-				Vector2 nextPosition = currentPosition.MoveToward(enemyPosition, step);
-				correspondingNode.Position = nextPosition;
+			float step = speed * (float)correspondingNode.GetProcessDeltaTime();
+			Vector2 nextPosition = currentPosition.MoveToward(enemyPosition, step);
+			correspondingNode.Position = nextPosition;
 
-				if (currentPosition.DistanceTo(enemyPosition) < UNIT_RANGE)
-				{
-					await attackEnemy(enemy);
-					break;
-				}
+			if (nextPosition.DistanceTo(enemyPosition) < UNIT_RANGE)
+			{
+				await attackEnemy(enemy, token);
+				continue;
+			}
 
-				await correspondingNode.ToSignal(correspondingNode.GetTree(), "process_frame");
+			bool frameWaited = await AwaitWithCancellation(
+				correspondingNode.ToSignal(correspondingNode.GetTree(), "process_frame"), token);
+			if (!frameWaited)
+			{
+				return;
 			}
 		}
 	}
 
-	public async Task attackEnemy(UnitInstance enemy)
+	public async Task attackEnemy(UnitInstance enemy, CancellationToken token)
 	{
 		while (health > 0 && enemy != null && enemy.health > 0)
 		{
+			if (token.IsCancellationRequested)
+			{
+				return;
+			}
+
 			float distance = correspondingNode.Position.DistanceTo(enemy.correspondingNode.Position);
 			if (distance > UNIT_RANGE)
 			{
-				GD.Print("Enemy out of range, chasing again.");
 				break;
 			}
+
 			enemy.health -= attack;
-			GD.Print($"{(isEnemy ? "Enemy" : "Ally")} attacked {(enemy.isEnemy ? "enemy" : "unit")}! Target health: {enemy.health}");
 
 			if (enemy.health <= 0)
 			{
@@ -117,7 +129,12 @@ public partial class UnitInstance
 			}
 
 			float delaySeconds = 1f / attackSpeed;
-			await correspondingNode.ToSignal(correspondingNode.GetTree().CreateTimer(delaySeconds), "timeout");
+			var timer = correspondingNode.GetTree().CreateTimer(delaySeconds);
+			bool waited = await AwaitWithCancellation(timer.ToSignal(timer, "timeout"), token);
+			if (!waited)
+			{
+				return;
+			}
 		}
 	}
 
@@ -127,5 +144,21 @@ public partial class UnitInstance
 		correspondingNode.QueueFree();
 		correspondingNode = null;
 		GD.Print(isEnemy ? "Enemy died" : "Your unit died");
+	}
+	public static async Task<bool> AwaitWithCancellation(SignalAwaiter signalAwaiter, CancellationToken token)
+	{
+		var tcs = new TaskCompletionSource<bool>();
+
+		using (token.Register(() => tcs.TrySetResult(false)))
+		{
+			var awaitSignal = AwaitSignal(signalAwaiter);
+			var completedTask = await Task.WhenAny(awaitSignal, tcs.Task);
+			return completedTask == awaitSignal;
+		}
+	}
+
+	private static async Task AwaitSignal(SignalAwaiter awaiter)
+	{
+		await awaiter;
 	}
 }

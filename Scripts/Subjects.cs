@@ -11,8 +11,8 @@ public partial class Subjects
 	public Dictionary<Unit, List<UnitInstance>> unitInstances { get; set; }
 	public bool isEnemy { get; set; }
 
-	public const int ROW_SIZE = 5;
-	public const int SPACING = 100;
+	public const int INIT_ROW_SIZE = 5;
+	public const int INIT_SPACING = 100;
 
 	public Subjects(List<Unit> units, bool isEnemy)
 	{
@@ -135,6 +135,15 @@ public partial class Subjects
 				}
 			}
 		}
+		int index = 0;
+		foreach (Unit unit in unitTypes)
+		{
+			foreach (UnitInstance unitInstance in unitInstances[unit])
+			{
+				positionUnit(unitInstance, index);
+				index += 1;
+			}
+		}
 	}
 
 	public void addUnitInstance(Unit unit)
@@ -145,12 +154,7 @@ public partial class Subjects
 
 		UnitInstance unitInstance = new UnitInstance(unit, unitNode);
 		unitInstance.isEnemy = isEnemy;
-		int count = totalInstances();
-		int xPos = (isEnemy ? 2000 : 1000) + count / ROW_SIZE * -SPACING;
-		int yPos = count % ROW_SIZE * SPACING + 500;
-		unitNode.Position = new Vector2(xPos, yPos);
 
-		Game.setNodeTexture(unitNode, unit.name);
 		unitInstances[unit].Add(unitInstance);
 		game.currentNode.AddChild(unitNode);
 	}
@@ -167,6 +171,17 @@ public partial class Subjects
 	public int totalInstances()
 	{
 		return unitInstances.Values.Sum(list => list.Count);
+	}
+
+	public void positionUnit(UnitInstance unitInstance, int currentCount)
+	{
+		int dynamicRowSize = INIT_ROW_SIZE + totalInstances() / 20;
+		int dynamicSpacing = Math.Max(30, INIT_SPACING - totalInstances() / 10);
+		int xPos = (isEnemy ? 2000 : 1000) + currentCount / dynamicRowSize * -dynamicSpacing;
+		int yPos = currentCount % dynamicRowSize * dynamicSpacing + 500;
+		unitInstance.correspondingNode.Position = new Vector2(xPos, yPos);
+
+		Game.setNodeTexture(unitInstance.correspondingNode, unitInstance.unitType.name);
 	}
 
 	public override string ToString()
