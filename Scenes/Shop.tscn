@@ -4,10 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://b8v1lrpbghs1v" path="res://icon.svg" id="2_iidq5"]
 [ext_resource type="Texture2D" uid="uid://btn885c6a5xnd" path="res://Sprites/RustTexture.png" id="2_wndna"]
 [ext_resource type="Texture2D" uid="uid://f8gufevf0hgq" path="res://Sprites/PentagramMed.png" id="4_ckylj"]
-[ext_resource type="LabelSettings" uid="uid://dv0gmkcyfy3x3" path="res://Scenes/Heading.tres" id="4_e5ji4"]
-[ext_resource type="LabelSettings" uid="uid://indppj7j66xy" path="res://Scenes/Description.tres" id="5_wndna"]
-[ext_resource type="LabelSettings" uid="uid://c4h01b4m8cl7j" path="res://Scenes/SecretHeading.tres" id="7_2aaoe"]
-[ext_resource type="LabelSettings" uid="uid://ci8s2ddd6jpep" path="res://Scenes/RollHeading.tres" id="7_ckylj"]
+[ext_resource type="LabelSettings" uid="uid://dv0gmkcyfy3x3" path="res://LabelSettings/Heading.tres" id="4_e5ji4"]
+[ext_resource type="LabelSettings" uid="uid://indppj7j66xy" path="res://LabelSettings/Description.tres" id="5_wndna"]
+[ext_resource type="LabelSettings" uid="uid://c4h01b4m8cl7j" path="res://LabelSettings/SecretHeading.tres" id="7_2aaoe"]
+[ext_resource type="LabelSettings" uid="uid://ci8s2ddd6jpep" path="res://LabelSettings/RollHeading.tres" id="7_ckylj"]
 
 [sub_resource type="Theme" id="Theme_7ae35"]
 
@@ -123,6 +123,7 @@ texture = ExtResource("2_iidq5")
 
 [node name="SecretLabel" type="Label" parent="Pentagram/ColorRect1/Upgrade1"]
 visible = false
+layout_mode = 0
 offset_left = 2.0
 offset_top = 86.0
 offset_right = 138.0
@@ -195,6 +196,7 @@ texture = ExtResource("2_iidq5")
 
 [node name="SecretLabel" type="Label" parent="Pentagram/ColorRect2/Upgrade2"]
 visible = false
+layout_mode = 0
 offset_left = 2.0
 offset_top = 86.0
 offset_right = 138.0
@@ -267,6 +269,7 @@ texture = ExtResource("2_iidq5")
 
 [node name="SecretLabel" type="Label" parent="Pentagram/ColorRect3/Upgrade3"]
 visible = false
+layout_mode = 0
 offset_left = 2.0
 offset_top = 86.0
 offset_right = 138.0
@@ -339,6 +342,7 @@ autowrap_mode = 3
 
 [node name="SecretLabel" type="Label" parent="Pentagram/ColorRect4/Upgrade4"]
 visible = false
+layout_mode = 0
 offset_left = 2.0
 offset_top = 86.0
 offset_right = 138.0
@@ -411,6 +415,7 @@ texture = ExtResource("2_iidq5")
 
 [node name="SecretLabel" type="Label" parent="Pentagram/ColorRect5/Upgrade5"]
 visible = false
+layout_mode = 0
 offset_left = 2.0
 offset_top = 86.0
 offset_right = 138.0

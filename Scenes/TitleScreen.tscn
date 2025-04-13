@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://cxo0nhboc41bp"]
+
+[ext_resource type="Texture2D" uid="uid://cbwdewghjvufc" path="res://Sprites/Free-Cursed-Land-Top-Down-Pixel-Art-Tileset5-1536x1024.webp" id="1_8l4an"]
+[ext_resource type="Script" uid="uid://1vys5ciqe1ur" path="res://Scripts/TitleNode.cs" id="1_n15yj"]
+[ext_resource type="Texture2D" uid="uid://btn885c6a5xnd" path="res://Sprites/RustTexture.png" id="2_n15yj"]
+[ext_resource type="LabelSettings" uid="uid://nq3ayx34ptdp" path="res://LabelSettings/Title.tres" id="3_emot1"]
+[ext_resource type="LabelSettings" uid="uid://1o1srv1khl0u" path="res://LabelSettings/Title2.tres" id="5_emot1"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n15yj")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1536.0
+offset_bottom = 1024.0
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_8l4an")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 125.0
+offset_top = 40.0
+offset_right = 1025.0
+offset_bottom = 340.0
+text = "Throne of Sin"
+label_settings = ExtResource("3_emot1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+offset_left = 320.0
+offset_top = 300.0
+offset_right = 1220.0
+offset_bottom = 600.0
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_n15yj")
+
+[node name="Start" type="Button" parent="TextureRect2"]
+layout_mode = 0
+offset_right = 900.0
+offset_bottom = 300.0
+
+[node name="Label" type="Label" parent="TextureRect2"]
+layout_mode = 0
+offset_left = 3.33331
+offset_right = 902.333
+offset_bottom = 298.0
+text = "start game"
+label_settings = ExtResource("5_emot1")
+horizontal_alignment = 1
+vertical_alignment = 1
