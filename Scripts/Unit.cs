@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public partial class Unit
 {
-    public int attack { get; set; }
-    public int speed { get; set; }
 	public Dictionary<string,float> stats { get; set; }
 	public virtual int baseQuantity { get; set; } = 1;
 	public string name { get; set; }

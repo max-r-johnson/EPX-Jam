@@ -11,7 +11,6 @@ public partial class BattleNode : Node
 	public Shop shop {get {return game.shop;}}
 	public Subjects subjects {get {return game.subjects;}}
 	public Subjects enemySubjects {get {return game.enemySubjects;}}
-	public int roundLives {get; set; } = Shop.INIT_ROUND_LIVES;
 	public override void _Ready()
 	{
 		game.currentNode = this;
@@ -72,7 +71,7 @@ public partial class BattleNode : Node
 
 	public void startTurn()
 	{
-		subjects.incLives(roundLives);
+		subjects.incLives(shop.roundLives);
 		enemySubjects.incLives(Shop.INIT_ROUND_LIVES);
 		shop.refreshShop();
 		GetTree().ChangeSceneToFile("res://Shop.tscn");
@@ -98,6 +97,27 @@ public partial class BattleNode : Node
 	{
 		Button endTurn = GetNode<Button>("End Turn");
 		endTurn.Pressed += OnEndTurn;
+
+		// Temp button
+		Button lust = GetNode<Button>("Button");
+		lust.Pressed += OnLust;
+	}
+
+	private void OnLust()
+	{
+		new Lust().upgradeMethod();
+		new Wrath().upgradeMethod();
+	}
+
+	private void OnRefresh()
+	{
+		shop.spentLives += Shop.ROLL_AMOUNT;
+		shop.refreshShop();
+	}
+
+	private void OnCloseShop()
+	{
+		shop.closeShop();
 	}
 
 	private void OnEndTurn()
