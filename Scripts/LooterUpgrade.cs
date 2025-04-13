@@ -7,6 +7,7 @@ public class LooterUpgrade : Upgrade
 {
     public LooterUpgrade()
     {
+        this.cost = cost;
         
     }
 }
