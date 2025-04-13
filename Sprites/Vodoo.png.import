@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cujl8hcf5xdp5"
-path="res://.godot/imported/Sloth.png-87753a14a5daa9553bb532c83b91f9a8.ctex"
+uid="uid://dltm3ko3mlw2o"
+path="res://.godot/imported/Vodoo.png-7871bbcb5c76b54c49a242baca53e3f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Sloth.png"
-dest_files=["res://.godot/imported/Sloth.png-87753a14a5daa9553bb532c83b91f9a8.ctex"]
+source_file="res://Sprites/Vodoo.png"
+dest_files=["res://.godot/imported/Vodoo.png-7871bbcb5c76b54c49a242baca53e3f8.ctex"]
 
 [params]
 

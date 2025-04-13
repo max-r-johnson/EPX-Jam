@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bud4q764p4ldi"]
+
+[ext_resource type="Texture2D" uid="uid://dt6sqgiemihoi" path="res://Sprites/Free-Undead-Tileset-Top-Down-Pixel-Art5-1536x1024.webp" id="1_ch383"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1536.0
+offset_bottom = 1024.0
+texture = ExtResource("1_ch383")
