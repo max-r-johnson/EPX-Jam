@@ -64,7 +64,6 @@ public partial class Wrath : Upgrade
         foreach(Unit unitType in game.subjects.unitTypes)
         {
             unitType.stats["attack"] *= 1.1f;
-            GD.Print(unitType.stats["attack"]);
         }
     }
 }
@@ -80,9 +79,7 @@ public partial class Sloth : Upgrade
         foreach(Unit unitType in game.enemySubjects.unitTypes)
         {
             unitType.stats["attack speed"] *= 0.9f;
-            GD.Print(unitType.stats["attack speed"]);
             unitType.stats["movement speed"] *= 0.9f;
-            GD.Print(unitType.stats["movement speed"]);
         }
     }
 }
@@ -96,7 +93,6 @@ public partial class Lust : Upgrade
     public override void upgradeMethod()
     {
         shop.roundLives += 1;
-		GD.Print("new round lives: " + shop.roundLives);
     }
 }
 
@@ -157,7 +153,6 @@ public partial class Gluttony : Upgrade
         foreach(Unit unitType in game.subjects.unitTypes)
         {
             unitType.stats["health"] *= 1.1f;
-            GD.Print(unitType.stats["health"]);
         }
     }
 }

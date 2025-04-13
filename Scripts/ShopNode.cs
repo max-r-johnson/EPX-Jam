@@ -24,6 +24,7 @@ public partial class ShopNode : Node
 		Button refresh = GetChildren()[2].GetNode<Button>("Refresh");
 		refresh.Pressed += OnRefresh;
 		refreshButton = refresh;
+		refreshButton.Show();
 
 		Button closeShop = GetNode<ColorRect>("ColorRect").GetNode<Button>("Close");
 		closeShop.Pressed += OnCloseShop;
@@ -110,6 +111,17 @@ public partial class ShopNode : Node
 	{
 		int totalLives = game.subjects.totalInstances() - shop.spentLives;
 		refreshButton.GetNode<Label>("Label").Text = totalLives.ToString() + " Lives";
+		foreach(int i in GD.Range(shop.currentUpgrades.Count))
+		{
+			if(totalLives <= shop.currentUpgrades[i].cost)
+			{
+				upgradeButtonList[i].Hide();
+			}
+		}
+		if(totalLives <= Shop.ROLL_AMOUNT)
+		{
+			refreshButton.Hide();
+		}
 	}
 
 	public void removeUpgrade(int i)
