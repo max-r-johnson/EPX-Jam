@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2fp30vnv3bus"]
+
+[ext_resource type="Texture2D" uid="uid://cbwdewghjvufc" path="res://Sprites/Free-Cursed-Land-Top-Down-Pixel-Art-Tileset5-1536x1024.webp" id="1_aoc2y"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_aoc2y")

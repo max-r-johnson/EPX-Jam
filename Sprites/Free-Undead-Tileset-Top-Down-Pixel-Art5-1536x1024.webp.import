@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f48xyux21k24"
-path="res://.godot/imported/LooterUpgrade.png-c3a741fc5bee7e12757dcf24152975dc.ctex"
+uid="uid://dt6sqgiemihoi"
+path="res://.godot/imported/Free-Undead-Tileset-Top-Down-Pixel-Art5-1536x1024.webp-140bb0c0ad75ea8c612efc31e7d137ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/LooterUpgrade.png"
-dest_files=["res://.godot/imported/LooterUpgrade.png-c3a741fc5bee7e12757dcf24152975dc.ctex"]
+source_file="res://Sprites/Free-Undead-Tileset-Top-Down-Pixel-Art5-1536x1024.webp"
+dest_files=["res://.godot/imported/Free-Undead-Tileset-Top-Down-Pixel-Art5-1536x1024.webp-140bb0c0ad75ea8c612efc31e7d137ee.ctex"]
 
 [params]
 

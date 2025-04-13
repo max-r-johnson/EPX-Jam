@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bb4j11lvufutt"]
+
+[ext_resource type="Texture2D" uid="uid://5p2p08osgg2g" path="res://Sprites/background0.png" id="1_abb5m"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_abb5m")

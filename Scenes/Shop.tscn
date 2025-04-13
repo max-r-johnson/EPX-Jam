@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://1qwr4wisjuo3"]
+[gd_scene load_steps=8 format=3 uid="uid://bb0ttmu3p0lic"]
 
-[ext_resource type="Texture2D" uid="uid://b56vqbp6840oi" path="res://Sprites/Pentagram.png" id="1_c53l5"]
 [ext_resource type="Script" uid="uid://c45mkw5ne408n" path="res://Scripts/ShopNode.cs" id="1_lagin"]
 [ext_resource type="Texture2D" uid="uid://b8v1lrpbghs1v" path="res://icon.svg" id="2_iidq5"]
+[ext_resource type="Texture2D" uid="uid://btn885c6a5xnd" path="res://Sprites/RustTexture.png" id="2_wndna"]
+[ext_resource type="Texture2D" uid="uid://f8gufevf0hgq" path="res://Sprites/PentagramMed.png" id="4_ckylj"]
 [ext_resource type="LabelSettings" uid="uid://dv0gmkcyfy3x3" path="res://Scenes/Heading.tres" id="4_e5ji4"]
 [ext_resource type="LabelSettings" uid="uid://indppj7j66xy" path="res://Scenes/Description.tres" id="5_wndna"]
 
@@ -12,13 +13,13 @@
 follow_viewport_enabled = true
 script = ExtResource("1_lagin")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 0.247059, 0.294118, 1)
+texture = ExtResource("2_wndna")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = 920.0
@@ -56,7 +57,7 @@ offset_left = -0.480011
 offset_top = 0.28
 offset_right = 599.52
 offset_bottom = 600.28
-texture = ExtResource("1_c53l5")
+texture = ExtResource("4_ckylj")
 
 [node name="ColorRect1" type="ColorRect" parent="Pentagram"]
 layout_mode = 0
