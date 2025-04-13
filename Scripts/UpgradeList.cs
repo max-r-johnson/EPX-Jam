@@ -7,7 +7,6 @@ public partial class MurdererUpgrade : Upgrade
 {
     public MurdererUpgrade() : base()
     {
-        cost = 1;
         text = "Upgrade the base stats of your murderers.";
     }
 
@@ -24,7 +23,6 @@ public partial class LooterUpgrade : Upgrade
 {
     public LooterUpgrade() : base()
     {
-        cost = 1;
         text = "Upgrade the base stats of your looters.";
     }
     public override void upgradeMethod()
@@ -44,10 +42,9 @@ public partial class Pride : Upgrade
     }
     public override void upgradeMethod()
     {
-        int unitTotal = 0;
         foreach(Unit unitType in game.subjects.unitTypes)
         {
-            unitTotal = game.subjects.unitInstances[unitType].Count;
+            int unitTotal = game.subjects.unitInstances[unitType].Count;
             unitType.stats["attack"] *= (float)Math.Min(Math.Pow(0.97, unitTotal) + 1.1f, 1.5f);
             unitType.stats["health"] *= (float)Math.Min(Math.Pow(0.97, unitTotal) + 1.1f, 1.5f);
             unitType.stats["attack speed"] *= (float)Math.Min(Math.Pow(0.97, unitTotal) + 1.1f, 1.5f);
@@ -60,7 +57,6 @@ public partial class Wrath : Upgrade
 {
     public Wrath() : base()
     {
-        cost = 1;
         text = "Upgrade the attack of your units by 10%.";
     }
     public override void upgradeMethod()
