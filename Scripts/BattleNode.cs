@@ -12,6 +12,7 @@ public partial class BattleNode : Node
 	public Shop shop {get {return game.shop;}}
 	public Subjects subjects {get {return game.subjects;}}
 	public Subjects enemySubjects {get {return game.enemySubjects;}}
+
 	public override async void _Ready()
 	{
 		game.currentNode = this;
@@ -91,16 +92,28 @@ public partial class BattleNode : Node
 
 	public void startTurn()
 	{
+		game.currentRound += 1;
 		subjects.incLives(shop.roundLives);
 		if (greed.greedFlag == true)
 		{
 			subjects.incLives(greed.dividend);
 			greed.greedFlag = false;
 		}
-		enemySubjects.incLives(60);
+		scaleEnemies();
 
 		shop.refreshShop();
 		GetTree().ChangeSceneToFile("res://Scenes/Shop.tscn");
+	}
+
+	public void scaleEnemies()
+	{
+		GD.Print((int)Math.Floor(Shop.INIT_ROUND_LIVES * Math.Pow(1.1, game.currentRound)));
+		enemySubjects.incLives((int)Math.Floor(Shop.INIT_ROUND_LIVES * Math.Pow(1.05, game.currentRound)));
+		foreach(Unit unitType in enemySubjects.unitTypes)
+		{
+			unitType.stats["health"] *= 1.05f;
+			unitType.stats["attack"] *= 1.05f;
+		}
 	}
 
 	private async Task ExecuteMoveTask(UnitInstance unitInstance, CancellationToken token)

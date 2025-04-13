@@ -12,7 +12,6 @@ public partial class Unit
 		stats = stats = new Dictionary<string, float>
         {
             { "attack", 1 },
-            { "speed", 1 },
 			{ "health", 1 },
 			{ "attack speed", 1 },
 			{ "movement speed", 1},
@@ -26,7 +25,6 @@ public partial class Unit
         this.stats = stats ?? new Dictionary<string, float>
         {
             { "attack", 1 },
-            { "speed", 1 },
 			{ "health", 1 },
 			{ "attack speed", 1 },
 			{ "movement speed", 1 },
