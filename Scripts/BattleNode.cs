@@ -8,6 +8,7 @@ using System.Linq;
 public partial class BattleNode : Node
 {
 	public Game game {get {return GameManager.Game;}}
+	public Greed greed { get; set; }
 	public Shop shop {get {return game.shop;}}
 	public Subjects subjects {get {return game.subjects;}}
 	public Subjects enemySubjects {get {return game.enemySubjects;}}
@@ -72,6 +73,11 @@ public partial class BattleNode : Node
 	public void startTurn()
 	{
 		subjects.incLives(shop.roundLives);
+		if (greed.greedFlag == true)
+		{
+			subjects.incLives(greed.dividend);
+			greed.greedFlag = false;
+		}
 		enemySubjects.incLives(Shop.INIT_ROUND_LIVES);
 		shop.refreshShop();
 		GetTree().ChangeSceneToFile("res://Shop.tscn");

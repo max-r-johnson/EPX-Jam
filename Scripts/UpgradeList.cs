@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 public partial class MurdererUpgrade : Upgrade
 {
@@ -37,7 +38,7 @@ public partial class Pride : Upgrade
 {
     public Pride() : base()
     {
-        text = "";
+        text = "Units grow stronger the fewer there are.";
     }
     public override void upgradeMethod()
     {
@@ -94,13 +95,16 @@ public partial class Lust : Upgrade
 
 public partial class Greed : Upgrade
 {
+    public int dividend = 0;
+    public bool greedFlag = false;
     public Greed() : base()
     {
-        text = "";
+        text = "Gain double the cost of this action as lives next turn.";
     }
     public override void upgradeMethod()
     {
-        
+        dividend = this.cost * 2;
+        greedFlag = true;
     }
 }
 
