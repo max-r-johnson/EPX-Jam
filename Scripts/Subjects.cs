@@ -141,6 +141,7 @@ public partial class Subjects
 
 		UnitInstance unitInstance = new UnitInstance(unit, unitNode);
 		unitInstance.isEnemy = isEnemy;
+		unitInstance.health = unit.stats["health"] * unit.statModifiers["health"] * (isEnemy ? game.enemyGlobalModifiers["health"] : game.globalModifiers["health"]);
 
 		unitInstances[unit].Add(unitInstance);
 		game.currentNode.AddChild(unitNode);
@@ -181,6 +182,18 @@ public partial class Subjects
 		unitInstance.correspondingNode.Position = new Vector2(xPos, yPos);
 
 		Game.setNodeTexture(unitInstance.correspondingNode, unitInstance.unitType.name, new Vector2(30, 30));
+	}
+
+	public void newUnit(Unit unit)
+	{
+		unitInstances[unit] = [];
+		foreach(int i in GD.Range(unit.baseQuantity))
+		{
+			GD.Print(i);
+			UnitInstance unitInstance = new UnitInstance(unit, null);
+			unitInstances[unit].Add(unitInstance);
+		}
+		unitTypes.Add(unit);
 	}
 
 	public override string ToString()

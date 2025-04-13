@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://ci8s2ddd6jpep"]
+
+[ext_resource type="FontFile" uid="uid://b5cj6mgvtgd42" path="res://Fonts/MB-HorrorHouse_Font.ttf" id="1_hbq13"]
+
+[resource]
+font = ExtResource("1_hbq13")
+font_size = 33
+font_color = Color(0.166464, 1.09798e-07, 3.30899e-08, 1)
+outline_color = Color(0.501961, 0, 0, 1)
+shadow_size = 0

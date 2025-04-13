@@ -1,7 +1,21 @@
 [gd_scene load_steps=3 format=3 uid="uid://cy6gnau7t0464"]
 
 [ext_resource type="Script" uid="uid://cdixjc8ln4onx" path="res://Scripts/BattleNode.cs" id="1_wvl2i"]
-[ext_resource type="Texture2D" uid="uid://5p2p08osgg2g" path="res://Sprites/background0.png" id="2_vr6xi"]
+[ext_resource type="Texture2D" uid="uid://cjdxfbf7blyxn" path="res://Sprites/background1.png" id="2_vr6xi"]
 
 [node name="BattleNode" type="Node2D"]
 script = ExtResource("1_wvl2i")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+z_index = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("2_vr6xi")

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public partial class Murderer : Unit
 {
-    public override int baseQuantity { get; set; } = 4;
+    public override int baseQuantity { get; set; } = 10;
     public Murderer() : base() 
     {        
         name = "Murderer";
@@ -12,21 +12,11 @@ public partial class Murderer : Unit
         stats["health"] = 10;
         stats["movement speed"] = 2;
     }
-
-    public Murderer(int quantity, Dictionary<string, float> stats = null) : base(quantity, stats) 
-    {        
-        name = "Murderer";
-    }
-
-    public override void upgrade()
-    {
-        stats["attack"] += 3;
-    }
 }
 
 public partial class Looter : Unit
 {
-    public override int baseQuantity { get; set; } = 6;
+    public override int baseQuantity { get; set; } = 18;
     public Looter() : base() 
     {        
         name = "Looter";
@@ -35,14 +25,27 @@ public partial class Looter : Unit
         stats["health"] = 8;
         stats["movement speed"] = 3;
     }
+}
 
-    public Looter(int quantity, Dictionary<string, float> stats = null) : base(quantity, stats) 
+public partial class Demon : Unit
+{
+    public override int baseQuantity { get; set; } = 3;
+    public Demon() : base() 
     {        
-        name = "Looter";
+        name = "Demon";
+        stats["attack"] = 10;
+        stats["attack speed"] = .5f;
+        stats["health"] = 30;
     }
+}
 
-    public override void upgrade()
-    {
-        stats["attack"] += 1;
+public partial class Lucifer : Unit
+{
+    public override int baseQuantity { get; set; } = 1;
+    public Lucifer() : base() 
+    {        
+        name = "Lucifer";
+        stats["attack"] = 50;
+        stats["health"] = 2000;
     }
 }

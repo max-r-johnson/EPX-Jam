@@ -97,10 +97,22 @@ public partial class ShopNode : Node
 	{
 		Button node = upgradeButtonList[i];
 		node.Show();
-		string upgradeName = shop.currentUpgrades[i].GetType().Name;
+		node.GetNode<Label>("Label").Show();
+		node.GetNode<Label>("SecretLabel").Hide();
+		string upgradeName = shop.currentUpgrades[i]?.title ?? shop.currentUpgrades[i].GetType().Name;
 		if (upgradeName.EndsWith("Upgrade"))
 		{
-			upgradeName = upgradeName.Substring(0, upgradeName.Length - "Upgrade".Length);
+			upgradeName = upgradeName.Substring(0, upgradeName.Length - "Upgrade".Length) + "+";
+		}
+		if (upgradeName.EndsWith("First"))
+		{
+			upgradeName = upgradeName.Substring(0, upgradeName.Length - "First".Length);
+		}
+		if(upgradeName == "Anubis's Scale")
+		{
+			node.GetNode<Label>("Label").Hide();
+			node.GetNode<Label>("SecretLabel").Show();
+			node.GetNode<Label>("SecretLabel").Text = upgradeName;
 		}
 		node.GetNode<Label>("Label").Text = upgradeName;
 		node.GetNode<Label>("Label2").Text = shop.currentUpgrades[i].text;
