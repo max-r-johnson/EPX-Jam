@@ -45,17 +45,11 @@ public partial class Shop
 				currentUpgrades.Add(selected);
 			}
 		}
-		foreach (Upgrade upgrade in currentUpgrades)
-		{
-			GD.Print(upgrade.GetType());
-		}
-		GD.Print("\n");
 	}
 
 	public void closeShop()
 	{
 		game.subjects.decLives(spentLives);
 		spentLives = 0;
-		GD.Print(game.subjects.ToString());
 	}
 }

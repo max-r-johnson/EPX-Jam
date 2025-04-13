@@ -139,7 +139,6 @@ public partial class UnitInstance
 		(isEnemy ? game.enemySubjects.unitInstances[unitType] : game.subjects.unitInstances[unitType]).Remove(this);
 		correspondingNode.QueueFree();
 		correspondingNode = null;
-		GD.Print(isEnemy ? "Enemy died" : "Your unit died");
 	}
 	public static async Task<bool> AwaitWithCancellation(SignalAwaiter signalAwaiter, CancellationToken token)
 	{
