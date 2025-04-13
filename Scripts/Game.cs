@@ -14,6 +14,8 @@ public partial class Game
 	public Game()
 	{
 		shop = new Shop();
+		subjects = new Subjects([new Murderer(), new Looter()], false);
+		enemySubjects = new Subjects([new Murderer()], true);
 	}
 
 	public void nextRound()

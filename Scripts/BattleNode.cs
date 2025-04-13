@@ -8,15 +8,32 @@ using System.Linq;
 public partial class BattleNode : Node
 {
 	public Game game {get {return GameManager.Game;}}
-	public Greed greed { get; set; }
+	public Greed greed { get; set; } = new Greed();
 	public Shop shop {get {return game.shop;}}
 	public Subjects subjects {get {return game.subjects;}}
 	public Subjects enemySubjects {get {return game.enemySubjects;}}
 	public override void _Ready()
 	{
 		game.currentNode = this;
-		game.subjects = new Subjects([new Murderer(), new Looter()], false);
-		game.enemySubjects = new Subjects([new Murderer()], true);
+		Dictionary<Unit, int> currentCounts = new Dictionary<Unit, int>();
+		foreach (var pair in subjects.unitInstances)
+		{
+			currentCounts[pair.Key] = pair.Value.Count;
+		}
+		foreach(Unit unitType in game.subjects.unitTypes)
+		{
+			game.subjects.unitInstances[unitType] = [];
+		}
+		game.subjects.instantiateUnits(currentCounts);
+		foreach (var pair in enemySubjects.unitInstances)
+		{
+			currentCounts[pair.Key] = pair.Value.Count;
+		}
+		foreach(Unit unitType in game.enemySubjects.unitTypes)
+		{
+			game.enemySubjects.unitInstances[unitType] = [];
+		}
+		game.enemySubjects.instantiateUnits(currentCounts);
 		GD.Print(subjects.ToString());
 		GD.Print(enemySubjects.ToString());
 		setupButtons();
@@ -73,14 +90,20 @@ public partial class BattleNode : Node
 
 	public void startTurn()
 	{
+		GD.Print("start turn");
 		subjects.incLives(shop.roundLives);
+		GD.Print("start turn");
 		if (greed.greedFlag == true)
 		{
 			subjects.incLives(greed.dividend);
 			greed.greedFlag = false;
 		}
-		enemySubjects.incLives(Shop.INIT_ROUND_LIVES);
+		GD.Print("start turn");
+		enemySubjects.incLives(1);
+		GD.Print("start turn");
+
 		shop.refreshShop();
+		GD.Print("start turn");
 		GetTree().ChangeSceneToFile("res://Scenes/Shop.tscn");
 	}
 
@@ -104,16 +127,6 @@ public partial class BattleNode : Node
 	{
 		Button endTurn = GetNode<Button>("End Turn");
 		endTurn.Pressed += OnEndTurn;
-
-		// Temp button
-		Button lust = GetNode<Button>("Button");
-		lust.Pressed += OnLust;
-	}
-
-	private void OnLust()
-	{
-		new Lust().upgradeMethod();
-		new Wrath().upgradeMethod();
 	}
 
 	private void OnRefresh()

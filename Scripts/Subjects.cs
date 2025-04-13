@@ -19,12 +19,14 @@ public partial class Subjects
 		this.isEnemy = isEnemy;
 		unitTypes = units;
 		unitInstances = units.ToDictionary(unit => unit, unit => new List<UnitInstance>());
-		Dictionary<Unit, int> instUnitCounts = new Dictionary<Unit, int>();
 		foreach (var unit in unitTypes)
 		{
-			instUnitCounts[unit] = unit.baseQuantity;
+			foreach(int i in GD.Range(unit.baseQuantity))
+			{
+				UnitInstance unitInstance = new UnitInstance(unit, null);
+				unitInstances[unit].Add(unitInstance);
+			}
 		}
-		instantiateUnits(instUnitCounts);
 	}
 
 	public void incLives(int amount)
@@ -110,39 +112,29 @@ public partial class Subjects
 			}
 		}
 
-		foreach (int i in GD.Range(totalToAdd))
+		foreach (var pair in remaining)
 		{
-			if (remaining.Count == 0) break;
-
-			int randomValue = GD.RandRange(0, totalToAdd - 1);
-			int cumulative = 0;
-
-			foreach (var pair in remaining)
+			for (int i = 0; i < pair.Value; i++)
 			{
-				cumulative += pair.Value;
-				if (randomValue < cumulative)
-				{
-					addUnitInstance(pair.Key);
-					remaining[pair.Key] -= 1;
-
-					if (remaining[pair.Key] <= 0)
-					{
-						remaining.Remove(pair.Key);
-					}
-
-					totalToAdd -= 1;
-					break;
-				}
+				addUnitInstance(pair.Key);
 			}
 		}
-		int index = 0;
+
+		List<UnitInstance> allInstances = new List<UnitInstance>();
 		foreach (Unit unit in unitTypes)
 		{
-			foreach (UnitInstance unitInstance in unitInstances[unit])
-			{
-				positionUnit(unitInstance, index);
-				index += 1;
-			}
+			allInstances.AddRange(unitInstances[unit]);
+		}
+
+		for (int i = 0; i < allInstances.Count; i++)
+		{
+			int j = GD.RandRange(i, allInstances.Count - 1);
+			(allInstances[i], allInstances[j]) = (allInstances[j], allInstances[i]);
+		}
+
+		for (int index = 0; index < allInstances.Count; index++)
+		{
+			positionUnit(allInstances[index], index);
 		}
 	}
 
