@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://1qwr4wisjuo3"]
+[gd_scene load_steps=10 format=3 uid="uid://1qwr4wisjuo3"]
 
 [ext_resource type="Script" uid="uid://c45mkw5ne408n" path="res://Scripts/ShopNode.cs" id="1_lagin"]
 [ext_resource type="Texture2D" uid="uid://b8v1lrpbghs1v" path="res://icon.svg" id="2_iidq5"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://f8gufevf0hgq" path="res://Sprites/PentagramMed.png" id="4_ckylj"]
 [ext_resource type="LabelSettings" uid="uid://dv0gmkcyfy3x3" path="res://Scenes/Heading.tres" id="4_e5ji4"]
 [ext_resource type="LabelSettings" uid="uid://indppj7j66xy" path="res://Scenes/Description.tres" id="5_wndna"]
+[ext_resource type="LabelSettings" uid="uid://c4h01b4m8cl7j" path="res://Scenes/SecretHeading.tres" id="7_2aaoe"]
 [ext_resource type="LabelSettings" uid="uid://ci8s2ddd6jpep" path="res://Scenes/RollHeading.tres" id="7_ckylj"]
 
 [sub_resource type="Theme" id="Theme_7ae35"]
@@ -120,6 +121,17 @@ position = Vector2(28, 15)
 scale = Vector2(0.201563, 0.2)
 texture = ExtResource("2_iidq5")
 
+[node name="SecretLabel" type="Label" parent="Pentagram/ColorRect1/Upgrade1"]
+visible = false
+offset_left = 2.0
+offset_top = 86.0
+offset_right = 138.0
+offset_bottom = 117.0
+text = "Anubis's Scale"
+label_settings = ExtResource("7_2aaoe")
+horizontal_alignment = 1
+autowrap_mode = 3
+
 [node name="ColorRect2" type="ColorRect" parent="Pentagram"]
 layout_mode = 0
 offset_left = 416.0
@@ -180,6 +192,17 @@ label_settings = ExtResource("4_e5ji4")
 position = Vector2(28, 15)
 scale = Vector2(0.201563, 0.2)
 texture = ExtResource("2_iidq5")
+
+[node name="SecretLabel" type="Label" parent="Pentagram/ColorRect2/Upgrade2"]
+visible = false
+offset_left = 2.0
+offset_top = 86.0
+offset_right = 138.0
+offset_bottom = 117.0
+text = "Anubis's Scale"
+label_settings = ExtResource("7_2aaoe")
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="ColorRect3" type="ColorRect" parent="Pentagram"]
 layout_mode = 0
@@ -242,6 +265,17 @@ position = Vector2(28, 15)
 scale = Vector2(0.201563, 0.2)
 texture = ExtResource("2_iidq5")
 
+[node name="SecretLabel" type="Label" parent="Pentagram/ColorRect3/Upgrade3"]
+visible = false
+offset_left = 2.0
+offset_top = 86.0
+offset_right = 138.0
+offset_bottom = 117.0
+text = "Anubis's Scale"
+label_settings = ExtResource("7_2aaoe")
+horizontal_alignment = 1
+autowrap_mode = 3
+
 [node name="ColorRect4" type="ColorRect" parent="Pentagram"]
 layout_mode = 0
 offset_left = 520.0
@@ -300,6 +334,17 @@ offset_right = 138.0
 offset_bottom = 159.0
 text = "If you have a unit the last enemy had, level it up. ddddd"
 label_settings = ExtResource("5_wndna")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="SecretLabel" type="Label" parent="Pentagram/ColorRect4/Upgrade4"]
+visible = false
+offset_left = 2.0
+offset_top = 86.0
+offset_right = 138.0
+offset_bottom = 117.0
+text = "Anubis's Scale"
+label_settings = ExtResource("7_2aaoe")
 horizontal_alignment = 1
 autowrap_mode = 3
 
@@ -363,6 +408,17 @@ label_settings = ExtResource("4_e5ji4")
 position = Vector2(28, 15)
 scale = Vector2(0.201563, 0.2)
 texture = ExtResource("2_iidq5")
+
+[node name="SecretLabel" type="Label" parent="Pentagram/ColorRect5/Upgrade5"]
+visible = false
+offset_left = 2.0
+offset_top = 86.0
+offset_right = 138.0
+offset_bottom = 117.0
+text = "Anubis's Scale"
+label_settings = ExtResource("7_2aaoe")
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="Refresh" type="Button" parent="Pentagram"]
 layout_mode = 2

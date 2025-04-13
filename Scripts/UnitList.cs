@@ -13,14 +13,9 @@ public partial class Murderer : Unit
         stats["movement speed"] = 2;
     }
 
-    public Murderer(int quantity, Dictionary<string, float> stats = null) : base(quantity, stats) 
+    public Murderer(int quantity, Dictionary<string, float> statModifiers = null) : base(quantity, statModifiers) 
     {        
         name = "Murderer";
-    }
-
-    public override void upgrade()
-    {
-        stats["attack"] += 3;
     }
 }
 
@@ -36,13 +31,25 @@ public partial class Looter : Unit
         stats["movement speed"] = 3;
     }
 
-    public Looter(int quantity, Dictionary<string, float> stats = null) : base(quantity, stats) 
+    public Looter(int quantity, Dictionary<string, float> statModifiers = null) : base(quantity, statModifiers) 
     {        
         name = "Looter";
     }
+}
 
-    public override void upgrade()
-    {
-        stats["attack"] += 1;
+public partial class Demon : Unit
+{
+    public override int baseQuantity { get; set; } = 3;
+    public Demon() : base() 
+    {        
+        name = "Demon";
+        stats["attack"] = 10;
+        stats["attack speed"] = .5f;
+        stats["health"] = 30;
+    }
+
+    public Demon(int quantity, Dictionary<string, float> statModifiers = null) : base(quantity, statModifiers) 
+    {        
+        name = "Demon";
     }
 }

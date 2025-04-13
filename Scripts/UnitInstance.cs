@@ -18,7 +18,7 @@ public partial class UnitInstance
 	{
 		this.unitType = unitType;
 		this.correspondingNode = correspondingNode;
-		health = unitType.stats["health"];
+		health = unitType.stats["health"] * unitType.statModifiers["health"];
 	}
 
 	public UnitInstance findTarget()
@@ -49,7 +49,7 @@ public partial class UnitInstance
 
 	public async Task moveToEnemy(UnitInstance enemy, CancellationToken token)
 	{
-		float speed = unitType.stats["movement speed"] * 50f;
+		float speed = unitType.stats["movement speed"] * unitType.statModifiers["movement speed"] * 50f;
 
 		while (health > 0)
 		{
@@ -116,7 +116,7 @@ public partial class UnitInstance
 				break;
 			}
 
-			enemy.health -= unitType.stats["attack"];
+			enemy.health -= unitType.stats["attack"] * unitType.statModifiers["attack"];
 
 			if (enemy.health <= 0)
 			{
@@ -124,7 +124,7 @@ public partial class UnitInstance
 				return;
 			}
 
-			float delaySeconds = 1f / unitType.stats["attack speed"];
+			float delaySeconds = 1f / (unitType.stats["attack speed"] * unitType.statModifiers["attack speed"]);
 			var timer = correspondingNode.GetTree().CreateTimer(delaySeconds);
 			bool waited = await AwaitWithCancellation(timer.ToSignal(timer, "timeout"), token);
 			if (!waited)

@@ -8,7 +8,6 @@ using System.Linq;
 public partial class BattleNode : Node
 {
 	public Game game {get {return GameManager.Game;}}
-	public Greed greed { get; set; } = new Greed();
 	public Shop shop {get {return game.shop;}}
 	public Subjects subjects {get {return game.subjects;}}
 	public Subjects enemySubjects {get {return game.enemySubjects;}}
@@ -24,7 +23,14 @@ public partial class BattleNode : Node
 		foreach(Unit unitType in game.subjects.unitTypes)
 		{
 			game.subjects.unitInstances[unitType] = [];
+			foreach(var pair in unitType.statModifiers)
+			{
+				GD.Print(pair.Key);
+				GD.Print(pair.Value);
+			}
+			GD.Print("------");
 		}
+		GD.Print("################");
 		game.subjects.instantiateUnits(currentCounts);
 		foreach (var pair in enemySubjects.unitInstances)
 		{
@@ -33,6 +39,12 @@ public partial class BattleNode : Node
 		foreach(Unit unitType in game.enemySubjects.unitTypes)
 		{
 			game.enemySubjects.unitInstances[unitType] = [];
+			foreach(var pair in unitType.statModifiers)
+			{
+				GD.Print(pair.Key);
+				GD.Print(pair.Value);
+				GD.Print("------");
+			}
 		}
 		game.enemySubjects.instantiateUnits(currentCounts);
 		GD.Print(subjects.ToString());
@@ -94,11 +106,8 @@ public partial class BattleNode : Node
 	{
 		game.currentRound += 1;
 		subjects.incLives(shop.roundLives);
-		if (greed.greedFlag == true)
-		{
-			subjects.incLives(greed.dividend);
-			greed.greedFlag = false;
-		}
+		subjects.incLives(shop.greedCount * shop.greedDividend);
+		shop.greedCount = 0;
 		scaleEnemies();
 
 		shop.refreshShop();
@@ -110,8 +119,8 @@ public partial class BattleNode : Node
 		enemySubjects.incLives((int)Math.Floor(Shop.INIT_ROUND_LIVES * Math.Pow(1.01, game.currentRound)));
 		foreach(Unit unitType in enemySubjects.unitTypes)
 		{
-			unitType.stats["health"] *= 1.025f;
-			unitType.stats["attack"] *= 1.025f;
+			unitType.statModifiers["health"] *= 1.025f;
+			unitType.statModifiers["attack"] *= 1.025f;
 		}
 	}
 
