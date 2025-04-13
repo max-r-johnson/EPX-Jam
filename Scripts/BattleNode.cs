@@ -12,7 +12,7 @@ public partial class BattleNode : Node
 	public Subjects subjects {get {return game.subjects;}}
 	public Subjects enemySubjects {get {return game.enemySubjects;}}
 	public int roundLives {get; set; } = Shop.INIT_ROUND_LIVES;
-	public override async void _Ready()
+	public override void _Ready()
 	{
 		game.currentNode = this;
 		game.subjects = new Subjects([new Murderer(), new Looter()], false);
@@ -20,7 +20,6 @@ public partial class BattleNode : Node
 		GD.Print(subjects.ToString());
 		GD.Print(enemySubjects.ToString());
 		setupButtons();
-		await battle();
 	}
 
 	public async Task battle()
@@ -74,6 +73,7 @@ public partial class BattleNode : Node
 	public void startTurn()
 	{
 		subjects.incLives(roundLives);
+		enemySubjects.incLives(Shop.INIT_ROUND_LIVES);
 		shop.refreshShop();
 		// Navigate to shop scene
 	}
