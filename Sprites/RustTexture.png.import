@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f48xyux21k24"
-path="res://.godot/imported/LooterUpgrade.png-c3a741fc5bee7e12757dcf24152975dc.ctex"
+uid="uid://btn885c6a5xnd"
+path="res://.godot/imported/RustTexture.png-086f16bbf5c70e460647b2cfe6276546.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/LooterUpgrade.png"
-dest_files=["res://.godot/imported/LooterUpgrade.png-c3a741fc5bee7e12757dcf24152975dc.ctex"]
+source_file="res://Sprites/RustTexture.png"
+dest_files=["res://.godot/imported/RustTexture.png-086f16bbf5c70e460647b2cfe6276546.ctex"]
 
 [params]
 

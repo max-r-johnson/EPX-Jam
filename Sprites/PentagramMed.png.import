@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f48xyux21k24"
-path="res://.godot/imported/LooterUpgrade.png-c3a741fc5bee7e12757dcf24152975dc.ctex"
+uid="uid://f8gufevf0hgq"
+path="res://.godot/imported/PentagramMed.png-7dd9d934530fe3d95c67b1b462a5e7c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/LooterUpgrade.png"
-dest_files=["res://.godot/imported/LooterUpgrade.png-c3a741fc5bee7e12757dcf24152975dc.ctex"]
+source_file="res://Sprites/PentagramMed.png"
+dest_files=["res://.godot/imported/PentagramMed.png-7dd9d934530fe3d95c67b1b462a5e7c0.ctex"]
 
 [params]
 
