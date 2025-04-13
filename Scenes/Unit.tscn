@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b5dmh5h6k8jml"]
 
-[ext_resource type="Texture2D" uid="uid://3jdgxpayyasw" path="res://Sprites/MurdererUpgrade.png" id="1_qk68r"]
+[ext_resource type="Texture2D" uid="uid://cvveig84g21ma" path="res://Sprites/Murderer.png" id="1_qk68r"]
 
 [node name="Unit" type="Node2D"]
 
