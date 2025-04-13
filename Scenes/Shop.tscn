@@ -11,7 +11,7 @@
 
 [sub_resource type="Theme" id="Theme_7ae35"]
 
-[node name="Control" type="CanvasLayer"]
+[node name="Control2" type="CanvasLayer"]
 follow_viewport_enabled = true
 script = ExtResource("1_lagin")
 
