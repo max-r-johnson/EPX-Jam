@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cxo0nhboc41bp"]
 
 [ext_resource type="Texture2D" uid="uid://cbwdewghjvufc" path="res://Sprites/Free-Cursed-Land-Top-Down-Pixel-Art-Tileset5-1536x1024.webp" id="1_8l4an"]
-[ext_resource type="Script" uid="uid://1vys5ciqe1ur" path="res://Scripts/TitleNode.cs" id="1_n15yj"]
+[ext_resource type="Script" path="res://Scripts/TitleNode.cs" id="1_n15yj"]
 [ext_resource type="Texture2D" uid="uid://btn885c6a5xnd" path="res://Sprites/RustTexture.png" id="2_n15yj"]
 [ext_resource type="LabelSettings" uid="uid://nq3ayx34ptdp" path="res://LabelSettings/Title.tres" id="3_emot1"]
 [ext_resource type="LabelSettings" uid="uid://1o1srv1khl0u" path="res://LabelSettings/Title2.tres" id="5_emot1"]

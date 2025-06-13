@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://bb0ttmu3p0lic"]
 
-[ext_resource type="Script" uid="uid://c45mkw5ne408n" path="res://Scripts/ShopNode.cs" id="1_lagin"]
+[ext_resource type="Script" path="res://Scripts/ShopNode.cs" id="1_lagin"]
 [ext_resource type="Texture2D" uid="uid://b8v1lrpbghs1v" path="res://icon.svg" id="2_iidq5"]
 [ext_resource type="Texture2D" uid="uid://btn885c6a5xnd" path="res://Sprites/RustTexture.png" id="2_wndna"]
 [ext_resource type="Texture2D" uid="uid://f8gufevf0hgq" path="res://Sprites/PentagramMed.png" id="4_ckylj"]

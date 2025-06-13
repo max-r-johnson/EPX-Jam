@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cy6gnau7t0464"]
 
-[ext_resource type="Script" uid="uid://cdixjc8ln4onx" path="res://Scripts/BattleNode.cs" id="1_wvl2i"]
+[ext_resource type="Script" path="res://Scripts/BattleNode.cs" id="1_wvl2i"]
 [ext_resource type="Texture2D" uid="uid://cjdxfbf7blyxn" path="res://Sprites/background1.png" id="2_vr6xi"]
 
 [node name="BattleNode" type="Node2D"]

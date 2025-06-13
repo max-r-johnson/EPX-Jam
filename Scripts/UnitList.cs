@@ -46,6 +46,6 @@ public partial class Lucifer : Unit
     {        
         name = "Lucifer";
         stats["attack"] = 50;
-        stats["health"] = 2000;
+        stats["health"] = 2500;
     }
 }
